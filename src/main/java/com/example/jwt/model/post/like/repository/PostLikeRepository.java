@@ -8,5 +8,4 @@ public interface PostLikeRepository extends JpaRepository<PostLike, Long> {
     PostLike findAllByPost (Post post);
 
     Long countPostLikeByPost (Post post);
-
 }

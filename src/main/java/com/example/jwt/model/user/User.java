@@ -45,10 +45,9 @@ public class User extends BaseEntity implements UserDetails {
     @Column(name = "email", unique = true, nullable = false)
     private String email;
 
-
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
-    private UserRole role = UserRole.ROLE_NOT_PERMITTED;
+    private UserRole role = UserRole.ROLE_NOT_STUDENT;
 
 
     @Override

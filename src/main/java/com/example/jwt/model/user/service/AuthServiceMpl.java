@@ -54,6 +54,7 @@ public class AuthServiceMpl implements UserService {
         redisUtil.setDataExpire(user.getUsername(), refreshJwt, JwtUtil.REFRESH_TOKEN_VALIDATION_SECOND);
         Map<String, String> map = new HashMap<>();
         map.put("username", user.getUsername());
+        map.put("Role", String.valueOf(user.getRole()));
         map.put("accessToken", accessToken);
         map.put("refreshToken", refreshJwt);
         return map;
@@ -76,7 +77,7 @@ public class AuthServiceMpl implements UserService {
     public void verifyEmail(String key) throws UserNotFoundException {
         String memberId = redisUtil.getData(key);
         User user = userRepository.findByUsername(memberId).orElseThrow(()-> new InvalidAuthenticationNumberException());
-        modifyUserRole(user, UserRole.ROLE_USER);
+        modifyUserRole(user, UserRole.ROLE_STUDENT);
         redisUtil.deleteData(key);
     }
 
@@ -111,7 +112,7 @@ public class AuthServiceMpl implements UserService {
     public void changePassword(User user, String password) throws UserNotFoundException {
         if (user == null) throw new UserNotFoundException();
         user.setPassword(passwordEncoder.encode(password));
-        user.setRole(UserRole.ROLE_USER);
+        user.setRole(UserRole.ROLE_STUDENT);
         userRepository.save(user);
     }
 
