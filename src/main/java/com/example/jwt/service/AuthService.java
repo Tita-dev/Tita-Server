@@ -29,4 +29,8 @@ public interface AuthService {
     void changePassword(Member member,String password) throws UserNotFoundException;
 
     void requestChangePassword(Member member) throws UserNotFoundException;
+
+    boolean checkUsernameDuplicate(String username);
+
+    boolean checkNameDuplicate(String name);
 }

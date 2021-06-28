@@ -68,4 +68,14 @@ public class MemberController {
         authService.changePassword(authService.findByUsername(requestChangePasswordDto.getUsername()),requestChangePasswordDto.getPassword());
         return responseService.getSuccessResult();
     }
+
+    @GetMapping("/username/{username}/exists")
+    public SingleResult<Boolean> checkUsernameDuplicate(@PathVariable String username){
+        return responseService.getSingleResult(authService.checkUsernameDuplicate(username));
+    }
+
+    @GetMapping("/name/{name}/exists")
+    public SingleResult<Boolean> checkNameDuplicate(@PathVariable String name){
+        return responseService.getSingleResult(authService.checkUsernameDuplicate(name));
+    }
 }

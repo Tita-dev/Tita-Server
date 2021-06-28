@@ -114,4 +114,14 @@ public class AuthServiceMpl implements AuthService{
         memberRepository.save(member);
     }
 
+    @Override
+    public boolean checkUsernameDuplicate(String username) {
+        return memberRepository.existsByUsername(username);
+    }
+
+    @Override
+    public boolean checkNameDuplicate(String name) {
+        return memberRepository.existsByName(name);
+    }
+
 }
