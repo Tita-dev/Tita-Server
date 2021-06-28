@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/tita")
 @RequiredArgsConstructor
 public class MemberController {
 
