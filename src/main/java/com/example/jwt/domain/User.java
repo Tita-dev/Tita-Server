@@ -19,24 +19,23 @@ import java.util.Date;
 @Table(name ="Members")
 public class Member implements UserDetails {
 
-    @Id
-    @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "member_idx")
     private int seq;
 
-    @Column(unique = true)
-    @NotNull
+    @Column(unique = true, nullable = false)
     private String username;
 
-    @NotNull
+    @Column(nullable = false)
     private String password;
 
-    @NotNull
+    @Column(unique = true, nullable = false)
     private String name;
 
-    @NotNull
-    private String email;
+    @Column(name = "phone_number",unique = true, nullable = false)
+    private String phoneNumber;
 
-    @NotNull
+    @Column(nullable = false)
     private String school;
 
     @Column(name = "role")
@@ -89,13 +88,11 @@ public class Member implements UserDetails {
     }
 
     @Builder
-    public Member (String username, String password, String name, String email, String school, Salt salt){
+    public Member (String username, String password, String name, String school, ){
         this.username = username;
         this.password = password;
         this.name = name;
-        this.email = email;
         this.school = school;
-        this.salt = salt;
     }
 }
 
