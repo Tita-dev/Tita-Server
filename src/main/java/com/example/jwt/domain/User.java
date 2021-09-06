@@ -16,28 +16,28 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name ="Members")
-public class Member implements UserDetails {
 
-    @Id
-    @GeneratedValue
-    private int seq;
+@Table(name ="member")
+public class User implements UserDetails {
 
-    @Column(unique = true)
-    @NotNull
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "member_idx")
+    private Long seq;
+
+    @Column(unique = true, nullable = false)
     private String username;
 
-    @NotNull
+    @Column(nullable = false)
     private String password;
 
-    @NotNull
+    @Column(unique = true, nullable = false)
     private String name;
 
-    @NotNull
-    private String email;
-
-    @NotNull
+    @Column(nullable = false)
     private String school;
+
+    @Column(name = "email",unique = true, nullable = false)
+    private String email;
 
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
@@ -49,10 +49,6 @@ public class Member implements UserDetails {
     @Temporal(TemporalType.TIMESTAMP)
     @UpdateTimestamp
     private Date updateAt;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "salt_id")
-    private Salt salt;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -89,13 +85,12 @@ public class Member implements UserDetails {
     }
 
     @Builder
-    public Member (String username, String password, String name, String email, String school, Salt salt){
+    public User(String username, String password, String name, String school, String email){
         this.username = username;
         this.password = password;
         this.name = name;
-        this.email = email;
         this.school = school;
-        this.salt = salt;
+        this.email = email;
     }
 }
 

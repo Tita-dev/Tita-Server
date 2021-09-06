@@ -6,14 +6,12 @@ import com.example.jwt.domain.response.SingleResult;
 import com.example.jwt.dto.*;
 import com.example.jwt.util.JwtUtil;
 import com.example.jwt.util.RedisUtil;
-import com.example.jwt.domain.Member;
+import com.example.jwt.domain.User;
 import com.example.jwt.service.AuthService;
 import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 @RestController
@@ -51,9 +49,9 @@ public class MemberController {
 
     @PostMapping("/password")
     public CommonResult requestChangePassword(@RequestBody RequestChangePasswordEmailDto requestChangePasswordEmailDto) throws NoSuchFieldException {
-        Member member = authService.findByUsername(requestChangePasswordEmailDto.getUsername());
-        if (!member.getEmail().equals(requestChangePasswordEmailDto.getEmail())) throw new NoSuchFieldException();
-        authService.requestChangePassword(member);
+        User user = authService.findByUsername(requestChangePasswordEmailDto.getUsername());
+        if (!user.getEmail().equals(requestChangePasswordEmailDto.getEmail())) throw new NoSuchFieldException();
+        authService.requestChangePassword(user);
         return responseService.getSuccessResult();
     }
 

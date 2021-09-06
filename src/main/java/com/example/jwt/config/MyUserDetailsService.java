@@ -1,6 +1,6 @@
 package com.example.jwt.config;
 
-import com.example.jwt.domain.Member;
+import com.example.jwt.domain.User;
 import com.example.jwt.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,7 +16,7 @@ public class MyUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Member member = memberRepository.findByUsername(username);
-        return member;
+        User user = memberRepository.findByUsername(username);
+        return user;
     }
 }

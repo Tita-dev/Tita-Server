@@ -3,7 +3,6 @@ package com.example.jwt.config;
 import com.example.jwt.advice.exception.AccessTokenExpiredException;
 import com.example.jwt.advice.exception.InvalidTokenException;
 import com.example.jwt.advice.exception.UserNotFoundException;
-import com.example.jwt.domain.Member;
 import com.example.jwt.util.JwtUtil;
 import com.example.jwt.util.RedisUtil;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -22,7 +21,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.InvalidClassException;
 
 @Slf4j
 @Component
