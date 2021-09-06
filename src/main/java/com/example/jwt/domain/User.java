@@ -16,12 +16,13 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name ="Members")
-public class Member implements UserDetails {
+
+@Table(name ="member")
+public class User implements UserDetails {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_idx")
-    private int seq;
+    private Long seq;
 
     @Column(unique = true, nullable = false)
     private String username;
@@ -32,11 +33,11 @@ public class Member implements UserDetails {
     @Column(unique = true, nullable = false)
     private String name;
 
-    @Column(name = "phone_number",unique = true, nullable = false)
-    private String phoneNumber;
-
     @Column(nullable = false)
     private String school;
+
+    @Column(name = "email",unique = true, nullable = false)
+    private String email;
 
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
@@ -48,10 +49,6 @@ public class Member implements UserDetails {
     @Temporal(TemporalType.TIMESTAMP)
     @UpdateTimestamp
     private Date updateAt;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "salt_id")
-    private Salt salt;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -88,11 +85,12 @@ public class Member implements UserDetails {
     }
 
     @Builder
-    public Member (String username, String password, String name, String school, ){
+    public User(String username, String password, String name, String school, String email){
         this.username = username;
         this.password = password;
         this.name = name;
         this.school = school;
+        this.email = email;
     }
 }
 

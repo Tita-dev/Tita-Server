@@ -1,8 +1,6 @@
 package com.example.jwt.dto;
 
-import com.example.jwt.domain.Member;
-import com.example.jwt.domain.Salt;
-import com.sun.istack.NotNull;
+import com.example.jwt.domain.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,25 +9,25 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class MemberDto {
+
     private String username;
+
     private String password;
 
     private String name;
 
+    private String school;
+
     private String email;
 
-    private String address;
 
-    private Salt salt;
-
-    public Member toEntity(){
-        return Member.builder()
+    public User toEntity(){
+        return User.builder()
                 .username(username)
                 .password(password)
                 .name(name)
+                .school(school)
                 .email(email)
-                .school(address)
-                .salt(salt)
                 .build();
     }
 }

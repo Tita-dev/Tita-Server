@@ -1,10 +1,9 @@
 package com.example.jwt.service;
 
 import com.example.jwt.advice.exception.UserNotFoundException;
-import com.example.jwt.domain.Member;
+import com.example.jwt.domain.User;
 import com.example.jwt.domain.UserRole;
 import com.example.jwt.dto.MemberDto;
-import javassist.NotFoundException;
 
 import java.util.Map;
 
@@ -16,19 +15,19 @@ public interface AuthService {
 
     Map<String,String> loginUser(String id, String password) throws Exception;
 
-    void sendVerificationMail(Member member) throws UserNotFoundException;
+    void sendVerificationMail(User user) throws UserNotFoundException;
 
     void verifyEmail(String key) throws UserNotFoundException;
 
-    void modifyUserRole(Member member, UserRole userRole);
+    void modifyUserRole(User user, UserRole userRole);
 
-    Member findByUsername(String username) throws UserNotFoundException;
+    User findByUsername(String username) throws UserNotFoundException;
 
     void isPasswordKeyValidate(String key)throws UserNotFoundException;
 
-    void changePassword(Member member,String password) throws UserNotFoundException;
+    void changePassword(User user, String password) throws UserNotFoundException;
 
-    void requestChangePassword(Member member) throws UserNotFoundException;
+    void requestChangePassword(User user) throws UserNotFoundException;
 
     boolean checkUsernameDuplicate(String username);
 

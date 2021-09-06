@@ -1,6 +1,5 @@
 package com.example.jwt.util;
 
-import com.example.jwt.domain.Member;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
