@@ -1,7 +1,6 @@
 package com.example.jwt.service;
 
-import com.example.jwt.advice.exception.UserAlreadyExistsException;
-import com.example.jwt.advice.exception.UserNotFoundException;
+import com.example.jwt.advice.exception.*;
 import com.example.jwt.domain.UserRole;
 import com.example.jwt.dto.MemberDto;
 import com.example.jwt.util.*;
@@ -29,6 +28,12 @@ public class AuthServiceMpl implements AuthService{
     public void signUpUser(MemberDto memberDto) {
         if (memberRepository.findByUsername(memberDto.getUsername()) != null) {
             throw new UserAlreadyExistsException();
+        }
+        if (memberRepository.findByName(memberDto.getName()) != null) {
+            throw new UserNicknameOverlapException();
+        }
+        if (memberRepository.findByEmail(memberDto.getEmail()) != null) {
+            throw new UserEmailOverlapException();
         }
         memberDto.setPassword(passwordEncoder.encode(memberDto.getPassword()));
         memberRepository.save(memberDto.toEntity());
@@ -63,7 +68,7 @@ public class AuthServiceMpl implements AuthService{
     public void verifyEmail(String key) throws UserNotFoundException {
         String memberId = redisUtil.getData(key);
         User user = memberRepository.findByUsername(memberId);
-        if (user ==null) throw new UserNotFoundException();
+        if (user == null) throw new InvalidAuthenticationNumberException();
         modifyUserRole(user,UserRole.ROLE_USER);
         redisUtil.deleteData(key);
     }
@@ -93,7 +98,7 @@ public class AuthServiceMpl implements AuthService{
     public void isPasswordKeyValidate(String key){
         String memberId = redisUtil.getData(key);
         User user = memberRepository.findByUsername(memberId);
-        if (user ==null) throw new UserNotFoundException();
+        if (user ==null) throw new InvalidAuthenticationNumberException();
         modifyUserRole(user,UserRole.ROLE_PASSWORD_CHANGE);
     }
 

@@ -48,6 +48,28 @@ public class ExceptionAdvice {
         // 예외 처리의 메시지를 MessageSource에서 가져오도록 수정
         return responseService.getFailResult(Integer.valueOf(getMessage("userAlreadyExists.code")), getMessage("userAlreadyExists.msg"));
     }
+    // 닉네임이 중복되었습니다.
+    @ExceptionHandler(UserNicknameOverlapException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    protected CommonResult userNicknameOverlapException(HttpServletRequest request, UserNicknameOverlapException e) {
+        // 예외 처리의 메시지를 MessageSource에서 가져오도록 수정
+        return responseService.getFailResult(Integer.valueOf(getMessage("userNicknameOverlap.code")), getMessage("userNicknameOverlap.msg"));
+    }
+    // 이메일이 중복되었습니다.
+    @ExceptionHandler(UserEmailOverlapException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    protected CommonResult userEmailOverlapException(HttpServletRequest request, UserEmailOverlapException e) {
+        // 예외 처리의 메시지를 MessageSource에서 가져오도록 수정
+        return responseService.getFailResult(Integer.valueOf(getMessage("userEmailOverlap.code")), getMessage("userEmailOverlap.msg"));
+    }
+
+    //인증 번호가 잘못되었습니다.
+    @ExceptionHandler(InvalidAuthenticationNumberException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    protected CommonResult invalidAuthenticationNumberException(HttpServletRequest request, InvalidAuthenticationNumberException e) {
+        // 예외 처리의 메시지를 MessageSource에서 가져오도록 수정
+        return responseService.getFailResult(Integer.valueOf(getMessage("invalidAuthenticationNumber.code")), getMessage("invalidAuthenticationNumber.msg"));
+    }
     // 로그인 실패.
     @ExceptionHandler(UserLoginFailedException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)

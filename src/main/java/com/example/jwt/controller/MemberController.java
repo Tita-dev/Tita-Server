@@ -74,6 +74,6 @@ public class MemberController {
 
     @GetMapping("/name/{name}/exists")
     public SingleResult<Boolean> checkNameDuplicate(@PathVariable String name){
-        return responseService.getSingleResult(authService.checkUsernameDuplicate(name));
+        return responseService.getSingleResult(authService.checkNameDuplicate(name));
     }
 }
