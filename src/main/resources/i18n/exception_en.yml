@@ -19,7 +19,7 @@ userEmailOverlap:
   code: "-400"
   msg: "This email is overlap."
 
-invalidAuthenticationNumberException:
+invalidAuthenticationNumber:
   code: "-400"
   msg: "Invalid authentication number"
 

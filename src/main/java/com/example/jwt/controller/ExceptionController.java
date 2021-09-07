@@ -31,5 +31,14 @@ public class ExceptionController {
     @GetMapping(value = "/userLoginFailed")
     public CommonResult answerAlreadyExists(){throw new UserLoginFailedException();}
 
+    @GetMapping(value = "/userNicknameOverlap")
+    public CommonResult userNicknameOverlapException(){throw new UserNicknameOverlapException();}
+
+    @GetMapping(value = "/userEmailOverlap")
+    public CommonResult userEmailOverlapException(){throw new UserEmailOverlapException();}
+
+    @GetMapping(value = "/invalidAuthenticationNumber")
+    public CommonResult invalidAuthenticationNumberException(){throw new InvalidAuthenticationNumberException();}
+
 }
 
