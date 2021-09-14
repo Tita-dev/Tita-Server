@@ -17,12 +17,12 @@ import java.util.Date;
 @AllArgsConstructor
 @Entity
 
-@Table(name ="member")
+@Table(name ="user")
 public class User implements UserDetails {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "member_idx")
-    private Long seq;
+    @Column(name = "user_idx")
+    private Long userIdx;
 
     @Column(unique = true, nullable = false)
     private String username;
