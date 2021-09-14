@@ -24,6 +24,10 @@ public class User implements UserDetails {
     @Column(name = "user_idx")
     private Long userIdx;
 
+    @OneToMany(mappedBy = "forumIdx")
+    @Column(name = "forum_idx")
+    private Forum forum;
+
     @Column(unique = true, nullable = false)
     private String username;
 
