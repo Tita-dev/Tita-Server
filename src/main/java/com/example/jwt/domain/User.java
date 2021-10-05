@@ -26,7 +26,6 @@ public class User implements UserDetails {
     private Long userIdx;
 
     @OneToMany(mappedBy = "forumIdx")
-    @Column(name = "forum_idx")
     private List<Forum> forums = new ArrayList<>();
 
     @Column(unique = true, nullable = false)

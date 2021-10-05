@@ -19,7 +19,6 @@ public class Forum {
 
     @ManyToOne
     @JoinColumn(name = "userIdx")
-    @Column(name = "user_idx")
     private User user;
 
     @Column(name = "forum_name")
