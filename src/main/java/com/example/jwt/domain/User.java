@@ -1,6 +1,5 @@
 package com.example.jwt.domain;
 
-import com.sun.istack.NotNull;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -8,8 +7,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 @Setter
 @Getter
@@ -26,7 +27,7 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "forumIdx")
     @Column(name = "forum_idx")
-    private Forum forum;
+    private List<Forum> forums = new ArrayList<>();
 
     @Column(unique = true, nullable = false)
     private String username;
