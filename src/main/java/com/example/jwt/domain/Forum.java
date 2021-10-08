@@ -11,6 +11,8 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 
+
+@Table(name ="forum")
 public class Forum {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,9 +23,9 @@ public class Forum {
     @JoinColumn(name = "userIdx")
     private User user;
 
-    @Column(name = "forum_name")
+    @Column(name = "forum_name",unique = true,nullable = false)
     private String forumName;
 
-    @Column(name = "explanation")
+    @Column(name = "explanation",nullable = true)
     private String explanation;
 }
