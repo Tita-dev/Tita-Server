@@ -7,16 +7,16 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
+
 
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Builder
 
 @Table(name ="user")
 public class User implements UserDetails {
@@ -24,9 +24,6 @@ public class User implements UserDetails {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_idx")
     private Long userIdx;
-
-    @OneToMany(mappedBy = "forumIdx")
-    private List<Forum> forums = new ArrayList<>();
 
     @Column(unique = true, nullable = false)
     private String username;
@@ -88,13 +85,6 @@ public class User implements UserDetails {
         return true;
     }
 
-    @Builder
-    public User(String username, String password, String name, String school, String email){
-        this.username = username;
-        this.password = password;
-        this.name = name;
-        this.school = school;
-        this.email = email;
-    }
+
 }
 
