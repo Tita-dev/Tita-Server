@@ -19,7 +19,7 @@ import java.util.Date;
 @Builder
 
 @Table(name ="user")
-public class User implements UserDetails {
+public class User extends BaseEntity implements UserDetails{
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_idx")
@@ -44,12 +44,6 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private UserRole role = UserRole.ROLE_NOT_PERMITTED;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @CreationTimestamp
-    private Date createAt;
-    @Temporal(TemporalType.TIMESTAMP)
-    @UpdateTimestamp
-    private Date updateAt;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
