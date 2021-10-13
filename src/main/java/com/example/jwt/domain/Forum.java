@@ -20,7 +20,7 @@ public class Forum extends BaseEntity{
     @Column(name = "forum_idx")
     private Long forumIdx;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userIdx")
     private User user;
 
