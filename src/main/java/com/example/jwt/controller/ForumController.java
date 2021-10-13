@@ -47,7 +47,7 @@ public class ForumController {
         /*
             Forum Service 제작 후 forumChangeDto에서 기존 forumname, 새로운 forumname, explanation 을 가져와 해당하는 forum의 정보 변경
                 +예외 처리
-         */
-        return responseService.getSuccessResult()
+  리      */
+        return responseService.getSuccessResult();
     }
 }
