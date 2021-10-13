@@ -7,6 +7,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.Date;
 
@@ -25,20 +27,25 @@ public class User extends BaseEntity implements UserDetails{
     @Column(name = "user_idx")
     private Long userIdx;
 
+    @Size(min = 8, max = 32)
     @Column(unique = true, nullable = false)
     private String username;
 
+    @Size(min = 8, max = 32)
     @Column(nullable = false)
     private String password;
 
+    @Size(max = 8)
     @Column(unique = true, nullable = false)
     private String name;
 
     @Column(nullable = false)
     private String school;
 
+    @Email
     @Column(name = "email",unique = true, nullable = false)
     private String email;
+
 
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
