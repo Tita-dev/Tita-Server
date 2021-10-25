@@ -33,10 +33,7 @@ public class ForumController {
 
     @DeleteMapping("/delete")
     public CommonResult forumDelete(@RequestBody ForumDto forumDto)throws Exception{
-        /*
-            Forum Service 제작 후 forumDto에서 forumname을 가져와 해당하는 forum삭제
-                + 예외처리
-         */
+        forumService.forumDelete(forumDto);
         return responseService.getSuccessResult();
     }
 

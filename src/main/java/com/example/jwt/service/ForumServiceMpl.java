@@ -45,7 +45,7 @@ public class ForumServiceMpl implements ForumService{
 
     @Override
     public void forumDelete(ForumDto forumDto) throws Exception {
-
+        forumRepository.deleteByForumName(forumDto.getForumName());
     }
 
     @Override
