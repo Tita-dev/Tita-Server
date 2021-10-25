@@ -37,7 +37,10 @@ public class ForumServiceMpl implements ForumService{
 
     @Override
     public void forumCreate(ForumDto forumDto) throws Exception {
-
+        if (forumRepository.findByForumName(forumDto.getForumName()) != null){
+            throw new Exception();
+        }
+        forumRepository.save(forumDto.toEntity());
     }
 
     @Override

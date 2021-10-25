@@ -27,10 +27,7 @@ public class ForumController {
 
     @PostMapping("/create")
     public CommonResult forumCreate(@RequestBody ForumDto forumDto) throws Exception{
-        /*
-            Forum Service 제작 후 forumDto에 담겨있는 정보 토대로 forum 제작
-                + 예외처리
-         */
+        forumService.forumCreate(forumDto);
         return responseService.getSuccessResult();
     }
 
