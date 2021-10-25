@@ -31,7 +31,6 @@ public class ForumServiceMpl implements ForumService{
                     .build();
             forumList.add(forumDto);
         }
-
         return forumList;
     }
 
@@ -50,6 +49,12 @@ public class ForumServiceMpl implements ForumService{
 
     @Override
     public void forumPut(ForumChangeDto forumChangeDto) throws Exception {
-
+        if (forumRepository.findByForumName(forumChangeDto.getForumName()) != null){
+            throw new Exception();
+        }
+        Forum forum = forumRepository.findByForumName(forumChangeDto.getForumName());
+        forum.setForumName(forumChangeDto.getNewForumName());
+        forum.setExplanation(forumChangeDto.getNewExplanation());
+        forumRepository.save(forum);
     }
 }

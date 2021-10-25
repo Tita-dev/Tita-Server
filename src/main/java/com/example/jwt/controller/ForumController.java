@@ -39,10 +39,7 @@ public class ForumController {
 
     @PutMapping("/put")
     public CommonResult forumPut(@RequestBody ForumChangeDto forumChangeDto) throws Exception{
-        /*
-            Forum Service 제작 후 forumChangeDto에서 기존 forumname, 새로운 forumname, explanation 을 가져와 해당하는 forum의 정보 변경
-                +예외 처리
-  리      */
+        forumService.forumPut(forumChangeDto);
         return responseService.getSuccessResult();
     }
 }
