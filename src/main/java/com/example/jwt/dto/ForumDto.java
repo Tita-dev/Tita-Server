@@ -1,30 +1,29 @@
 package com.example.jwt.dto;
 
 import com.example.jwt.domain.Forum;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 
 @Getter
 @NoArgsConstructor
 @Builder
 @Setter
+@AllArgsConstructor
 public class ForumDto {
+    @NotBlank
+    @Size(min = 4, max = 16)
     private String forumName;
+    @Size(max = 500)
     private String explanation;
 
 
-    public ForumDto (String forumName, String explanation){
-        this.forumName = forumName;
-        this.explanation = explanation;
-    }
-
     public Forum toEntity(){
         return Forum.builder()
-                .forumName(forumName)
-                .explanation(explanation)
+                .forumName(this.getForumName())
+                .explanation(this.getExplanation())
                 .build();
     }
 
