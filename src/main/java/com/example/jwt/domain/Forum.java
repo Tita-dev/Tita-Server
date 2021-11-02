@@ -1,9 +1,6 @@
 package com.example.jwt.domain;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -13,6 +10,7 @@ import javax.validation.constraints.Size;
 @Entity
 @NoArgsConstructor
 @Builder
+@AllArgsConstructor
 
 @Table(name ="forum")
 public class Forum extends BaseEntity{
