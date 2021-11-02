@@ -1,5 +1,6 @@
 package com.example.jwt.service;
 
+import com.example.jwt.domain.Forum;
 import com.example.jwt.dto.ForumDto;
 import com.example.jwt.repository.ForumRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -8,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -25,8 +29,17 @@ class ForumServiceTest {
 
     @DisplayName("게시판 목록 구현")
     @Test
-    void getForumList() {
-        
+    void getForumList() throws Exception{
+        //given
+        List<String> list;
+
+        //when
+        list = forumService.getForumList();
+
+        //than
+        for (String i : list){
+            System.out.println(i);
+        }
     }
 
     @DisplayName("게시판 생성")
