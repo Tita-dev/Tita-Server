@@ -7,7 +7,7 @@ import com.example.jwt.dto.ForumDto;
 import java.util.List;
 
 public interface ForumService {
-    List<ForumDto> getForumList() throws Exception;
+    List<String> getForumList() throws Exception;
 
     void forumCreate(ForumDto forumDto) throws Exception;
 

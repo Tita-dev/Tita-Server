@@ -20,8 +20,8 @@ public class ForumController {
     private final ForumService forumService;
 
     @GetMapping("/list")
-    public ListResult<ForumDto> forumList()throws Exception {
-        List<ForumDto> forumDtoList = forumService.getForumList();
+    public ListResult<String> forumList()throws Exception {
+        List<String> forumDtoList = forumService.getForumList();
         return responseService.getListResult(forumDtoList);
     }
 

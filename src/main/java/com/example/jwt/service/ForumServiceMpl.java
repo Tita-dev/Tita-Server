@@ -20,16 +20,16 @@ public class ForumServiceMpl implements ForumService{
 
     @Override
     @Transactional
-    public List<ForumDto> getForumList() throws Exception {
+    public List<String> getForumList() throws Exception {
         List<Forum> forums = forumRepository.findAll();
-        List<ForumDto> forumList = new ArrayList<>();
+        List<String> forumList = new ArrayList<>();
 
         for (Forum forum : forums){
             ForumDto forumDto = ForumDto.builder()
                     .forumName(forum.getForumName())
                     .explanation(forum.getExplanation())
                     .build();
-            forumList.add(forumDto);
+            forumList.add(forumDto.getForumName());
         }
         return forumList;
     }
