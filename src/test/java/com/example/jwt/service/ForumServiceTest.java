@@ -25,8 +25,6 @@ class ForumServiceTest {
     @Autowired
     private ForumService forumService;
 
-
-
     @DisplayName("게시판 목록 구현")
     @Test
     void getForumList() throws Exception{
@@ -47,18 +45,28 @@ class ForumServiceTest {
     void forumCreate() throws Exception{
         //given
         ForumDto forumDto = ForumDto.builder()
-                .forumName("민경모모모모모모모")
+                .forumName("민경ㅇㅇㅇㅇㅇㅇ")
                 .explanation("민민민민")
                 .build();
         //when
-        forumService.forumCreate(forumDto);
+        Forum forum = forumService.forumCreate(forumDto);
         //then
-        assertEquals(true,(forumRepository.existsByForumName(forumDto.getForumName())));
+        assertEquals(forumDto.getForumName(),(forum.getForumName()));
     }
 
     @DisplayName("게시판 삭제")
     @Test
-    void forumDelete() {
+    void forumDelete() throws Exception{
+        //given
+        ForumDto forumDto = ForumDto.builder()
+                .forumName("민경모모모모모모모")
+                .explanation("민민민민")
+                .build();
+        //when
+        forumService.forumDelete(forumDto);
+
+        //then
+        assertEquals(false,forumRepository.existsByForumName(forumDto.getForumName()));
     }
 
     @DisplayName("게시판 수정")

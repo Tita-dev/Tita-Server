@@ -35,21 +35,24 @@ public class ForumServiceMpl implements ForumService{
     }
 
     @Override
-    public void forumCreate(ForumDto forumDto) throws Exception {
+    public Forum forumCreate(ForumDto forumDto) throws Exception {
         if (forumRepository.existsByForumName(forumDto.getForumName()) == true){
             throw new Exception();
         }
-        forumRepository.save(forumDto.toEntity());
+        return forumRepository.save(forumDto.toEntity());
     }
 
     @Override
     public void forumDelete(ForumDto forumDto) throws Exception {
+        if (forumRepository.existsByForumName(forumDto.getForumName()) == false){
+            throw new Exception();
+        }
         forumRepository.deleteByForumName(forumDto.getForumName());
     }
 
     @Override
     public void forumPut(ForumChangeDto forumChangeDto) throws Exception {
-        if (forumRepository.existsByForumName(forumChangeDto.getForumName()) == true){
+        if (forumRepository.existsByForumName(forumChangeDto.getForumName()) == false){
             throw new Exception();
         }
         Forum forum = forumRepository.findByForumName(forumChangeDto.getForumName());
