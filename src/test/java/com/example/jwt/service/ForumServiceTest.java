@@ -1,6 +1,7 @@
 package com.example.jwt.service;
 
 import com.example.jwt.domain.Forum;
+import com.example.jwt.dto.ForumChangeDto;
 import com.example.jwt.dto.ForumDto;
 import com.example.jwt.repository.ForumRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -71,6 +72,17 @@ class ForumServiceTest {
 
     @DisplayName("게시판 수정")
     @Test
-    void forumPut() {
+    void forumPut() throws Exception{
+        //given
+        ForumChangeDto forumChangeDto = new ForumChangeDto();
+        forumChangeDto.setForumName("민경모민경모");
+        forumChangeDto.setNewForumName("민경모씹떢");
+        forumChangeDto.setNewExplanation("최윤성 개씹덕");
+
+        //when
+        forumService.forumPut(forumChangeDto);
+
+        //then
+        assertEquals(true,forumRepository.existsByForumName(forumChangeDto.getNewForumName()));
     }
 }
