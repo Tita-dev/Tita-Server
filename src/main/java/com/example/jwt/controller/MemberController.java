@@ -25,14 +25,14 @@ public class MemberController {
     private final ResponseService responseService;
 
     @PostMapping("/signup")
-    public CommonResult signUpUser(@RequestBody MemberDto memberDto) throws Exception{
-        authService.signUpUser(memberDto);
+    public CommonResult signUpUser(@RequestBody UserDto userDto) throws Exception{
+        authService.signUpUser(userDto);
         return responseService.getSuccessResult();
     }
 
     @PostMapping("/login")
-    public SingleResult<Map<String,String >> login (@RequestBody MemberSigninDto memberSigninDto) throws Exception {
-        return responseService.getSingleResult(authService.loginUser(memberSigninDto.getUsername(), memberSigninDto.getPassword()));
+    public SingleResult<Map<String,String >> login (@RequestBody UserSigninDto userSigninDto) throws Exception {
+        return responseService.getSingleResult(authService.loginUser(userSigninDto.getUsername(), userSigninDto.getPassword()));
     }
 
     @PostMapping("/verify")

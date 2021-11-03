@@ -2,7 +2,7 @@ package com.example.jwt.service;
 
 import com.example.jwt.advice.exception.*;
 import com.example.jwt.domain.UserRole;
-import com.example.jwt.dto.MemberDto;
+import com.example.jwt.dto.UserDto;
 import com.example.jwt.util.*;
 import com.example.jwt.domain.User;
 import com.example.jwt.repository.MemberRepository;
@@ -25,18 +25,18 @@ public class AuthServiceMpl implements AuthService{
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public void signUpUser(MemberDto memberDto) {
-        if (memberRepository.findByUsername(memberDto.getUsername()) != null) {
+    public User signUpUser(UserDto userDto) {
+        if (memberRepository.findByUsername(userDto.getUsername()) != null) {
             throw new UserAlreadyExistsException();
         }
-        if (memberRepository.findByName(memberDto.getName()) != null) {
+        if (memberRepository.findByName(userDto.getName()) != null) {
             throw new UserNicknameOverlapException();
         }
-        if (memberRepository.findByEmail(memberDto.getEmail()) != null) {
+        if (memberRepository.findByEmail(userDto.getEmail()) != null) {
             throw new UserEmailOverlapException();
         }
-        memberDto.setPassword(passwordEncoder.encode(memberDto.getPassword()));
-        memberRepository.save(memberDto.toEntity());
+        userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        return memberRepository.save(userDto.toEntity());
     }
 
     @Override
