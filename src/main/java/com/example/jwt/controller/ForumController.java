@@ -45,9 +45,9 @@ public class ForumController {
     }
 
     @GetMapping("/{forumName}/list")
-    public List<String> postList()throws Exception{
-
-        return null;
+    public ListResult<String> postList(@PathVariable String forumName)throws Exception{
+        List<String> postListDto = forumService.getForumPostList(forumName);
+        return responseService.getListResult(postListDto);
     }
 
     @PostMapping("/{forumName}/create")
