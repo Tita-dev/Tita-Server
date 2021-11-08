@@ -104,3 +104,18 @@ class ForumServiceTest {
             System.out.println(i);
         }
     }
+
+    @Test
+    void postCreate() throws Exception{
+        //given
+        PostDto postDto = PostDto.builder()
+                .postName("민경모는 에밀리아")
+                .content("를 좋아하냐????")
+                .build();
+        //when
+        Post post = forumService.postCreate("민경모모모",postDto);
+
+        //then
+        assertEquals(postDto.getPostName(),post.getPostName());
+    }
+}
