@@ -82,3 +82,12 @@ public class ForumServiceMpl implements ForumService{
         }
         return postList;
     }
+
+    @Override
+    public Post postCreate(String forumName,PostDto postDto) throws Exception {
+        Forum forum = forumRepository.findByForumName(forumName);
+        Post post = postDto.toEntity();
+        post.setForum(forum);
+        return postRepository.save(post);
+    }
+}

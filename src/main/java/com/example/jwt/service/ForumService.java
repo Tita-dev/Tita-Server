@@ -19,4 +19,6 @@ public interface ForumService {
     void forumPut(ForumChangeDto forumChangeDto) throws Exception;
 
     List<String> getForumPostList(String forumName) throws Exception;
+
+    Post postCreate(String forumName,PostDto postDto) throws Exception;
 }
