@@ -1,9 +1,13 @@
 package com.example.jwt.service;
 
 import com.example.jwt.domain.Forum;
+import com.example.jwt.domain.Post;
 import com.example.jwt.dto.ForumChangeDto;
 import com.example.jwt.dto.ForumDto;
+import com.example.jwt.dto.PostDto;
 import com.example.jwt.repository.ForumRepository;
+import com.example.jwt.repository.PostRepository;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +20,7 @@ import java.util.List;
 public class ForumServiceMpl implements ForumService{
 
     private final ForumRepository forumRepository;
+    private final PostRepository postRepository;
 
 
     @Override
@@ -60,4 +65,20 @@ public class ForumServiceMpl implements ForumService{
         forum.setExplanation(forumChangeDto.getNewExplanation());
         forumRepository.save(forum);
     }
-}
+
+    @Override
+    public List<String> getForumPostList(String forumName) throws Exception {
+        Forum forum =forumRepository.findByForumName(forumName);
+        List<Post> posts = postRepository.findAllByForum(forum);
+        List<String> postList = new ArrayList<>();
+
+        for (Post post : posts){
+            PostDto postDto = PostDto.builder()
+                    .postName(post.getPostName())
+                    .content(post.getContent())
+                    .build();
+            postList.add(postDto.getPostName());
+            postList.add(postDto.getContent());
+        }
+        return postList;
+    }
