@@ -1,9 +1,12 @@
 package com.example.jwt.service;
 
 import com.example.jwt.domain.Forum;
+import com.example.jwt.domain.Post;
 import com.example.jwt.dto.ForumChangeDto;
 import com.example.jwt.dto.ForumDto;
+import com.example.jwt.dto.PostDto;
 import com.example.jwt.repository.ForumRepository;
+import com.example.jwt.repository.PostRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +20,13 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-@Transactional
 class ForumServiceTest {
 
     @Autowired
     private ForumRepository forumRepository;
+
+    @Autowired
+    private PostRepository postRepository;
 
     @Autowired
     private ForumService forumService;
@@ -85,4 +90,17 @@ class ForumServiceTest {
         //then
         assertEquals(true,forumRepository.existsByForumName(forumChangeDto.getNewForumName()));
     }
-}
+
+    @Test
+    void getForumPostList() throws Exception {
+        //given
+        List<String> list;
+
+        //when
+        list = forumService.getForumPostList("민경모씹떢");
+
+        //then
+        for (String i : list){
+            System.out.println(i);
+        }
+    }
