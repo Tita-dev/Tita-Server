@@ -52,7 +52,7 @@ public class ForumController {
 
     @PostMapping("/{forumName}/create")
     public CommonResult postCreate(@PathVariable String forumName, @RequestBody PostDto postDto) throws Exception{
-
+        forumService.postCreate(forumName,postDto);
         return responseService.getSuccessResult();
     }
 
