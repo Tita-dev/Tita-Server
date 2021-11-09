@@ -4,6 +4,7 @@ import com.example.jwt.domain.Forum;
 import com.example.jwt.domain.Post;
 import com.example.jwt.dto.ForumChangeDto;
 import com.example.jwt.dto.ForumDto;
+import com.example.jwt.dto.PostChangeDto;
 import com.example.jwt.dto.PostDto;
 import com.example.jwt.repository.ForumRepository;
 import com.example.jwt.repository.PostRepository;
@@ -56,14 +57,14 @@ public class ForumServiceMpl implements ForumService{
     }
 
     @Override
-    public void forumPut(ForumChangeDto forumChangeDto) throws Exception {
+    public Forum forumPut(ForumChangeDto forumChangeDto) throws Exception {
         if (forumRepository.existsByForumName(forumChangeDto.getForumName()) == false){
             throw new Exception();
         }
         Forum forum = forumRepository.findByForumName(forumChangeDto.getForumName());
         forum.setForumName(forumChangeDto.getNewForumName());
         forum.setExplanation(forumChangeDto.getNewExplanation());
-        forumRepository.save(forum);
+        return forumRepository.save(forum);
     }
 
     @Override
