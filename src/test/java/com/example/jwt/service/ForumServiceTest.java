@@ -4,6 +4,7 @@ import com.example.jwt.domain.Forum;
 import com.example.jwt.domain.Post;
 import com.example.jwt.dto.ForumChangeDto;
 import com.example.jwt.dto.ForumDto;
+import com.example.jwt.dto.PostChangeDto;
 import com.example.jwt.dto.PostDto;
 import com.example.jwt.repository.ForumRepository;
 import com.example.jwt.repository.PostRepository;
@@ -20,6 +21,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
+@Transactional
 class ForumServiceTest {
 
     @Autowired
@@ -57,7 +59,7 @@ class ForumServiceTest {
         //when
         Forum forum = forumService.forumCreate(forumDto);
         //then
-        assertEquals(forumDto.getForumName(),(forum.getForumName()));
+        assertEquals(forumDto.getForumName(),forum.getForumName());
     }
 
     @DisplayName("게시판 삭제")
@@ -85,10 +87,10 @@ class ForumServiceTest {
         forumChangeDto.setNewExplanation("최윤성 개씹덕");
 
         //when
-        forumService.forumPut(forumChangeDto);
+        Forum forum = forumService.forumPut(forumChangeDto);
 
         //then
-        assertEquals(true,forumRepository.existsByForumName(forumChangeDto.getNewForumName()));
+        assertEquals(forumChangeDto.getNewForumName(),forum.getForumName());
     }
 
     @Test
