@@ -21,4 +21,6 @@ public interface ForumService {
     List<String> getForumPostList(String forumName) throws Exception;
 
     Post postCreate(String forumName,PostDto postDto) throws Exception;
+
+    void postDelete(String forumName,PostDto postDto) throws Exception;
 }

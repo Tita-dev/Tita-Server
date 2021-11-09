@@ -90,4 +90,9 @@ public class ForumServiceMpl implements ForumService{
         post.setForum(forum);
         return postRepository.save(post);
     }
-}
+
+    @Override
+    public void postDelete(String forumName, PostDto postDto) throws Exception {
+        Forum forum = forumRepository.findByForumName(forumName);
+        postRepository.deletePostByPostNameAndForum(postDto.getPostName(),forum);
+    }
