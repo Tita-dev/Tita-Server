@@ -23,4 +23,6 @@ public interface ForumService {
     Post postCreate(String forumName,PostDto postDto) throws Exception;
 
     void postDelete(String forumName,PostDto postDto) throws Exception;
+
+    Post postPut(String forumName, PostChangeDto postChangeDto) throws Exception;
 }

@@ -96,3 +96,13 @@ public class ForumServiceMpl implements ForumService{
         Forum forum = forumRepository.findByForumName(forumName);
         postRepository.deletePostByPostNameAndForum(postDto.getPostName(),forum);
     }
+
+    @Override
+    public Post postPut(String forumName, PostChangeDto postChangeDto) throws Exception {
+        Forum forum = forumRepository.findByForumName(forumName);
+        Post post = postRepository.findByPostNameAndForum(postChangeDto.getPostName(),forum);
+        post.setPostName(postChangeDto.getNewPostName());
+        post.setContent(postChangeDto.getNewContent());
+        return postRepository.save(post);
+    }
+}
