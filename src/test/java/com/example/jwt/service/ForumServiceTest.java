@@ -120,4 +120,33 @@ class ForumServiceTest {
         //then
         assertEquals(postDto.getPostName(),post.getPostName());
     }
+
+    @Test
+    void postDelete() throws Exception{
+        //given
+        PostDto postDto = PostDto.builder()
+                .postName("민경모는 에밀리아")
+                .content("를 좋아하냐????")
+                .build();
+        //when
+        forumService.postDelete("민경모모모",postDto);
+
+        //then
+        assertEquals(null,postRepository.findByPostNameAndForum(postDto.getPostName(),forumRepository.findByForumName("민경모모모")));
+    }
+
+    @Test
+    void postPut() throws Exception {
+        //given
+        PostChangeDto postChangeDto = new PostChangeDto();
+        postChangeDto.setPostName("최윤성은 에밀리아");
+        postChangeDto.setNewPostName("민경모는 에밀리아");
+        postChangeDto.setNewContent("를 좋아하냐????");
+
+        //when
+        Post post = forumService.postPut("민경모모모",postChangeDto);
+
+        //then
+        assertEquals(postChangeDto.getNewPostName(),post.getPostName());
+    }
 }
