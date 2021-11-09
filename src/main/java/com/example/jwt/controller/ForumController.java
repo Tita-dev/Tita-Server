@@ -5,6 +5,7 @@ import com.example.jwt.domain.response.ListResult;
 import com.example.jwt.domain.response.ResponseService;
 import com.example.jwt.dto.ForumChangeDto;
 import com.example.jwt.dto.ForumDto;
+import com.example.jwt.dto.PostChangeDto;
 import com.example.jwt.dto.PostDto;
 import com.example.jwt.service.ForumService;
 import lombok.RequiredArgsConstructor;
@@ -57,12 +58,14 @@ public class ForumController {
     }
 
     @DeleteMapping("/{forumName}/delete")
-    public CommonResult postDelete()throws Exception{
+    public CommonResult postDelete(@PathVariable String forumName, @RequestBody PostDto postDto)throws Exception{
+        forumService.postDelete(forumName,postDto);
         return responseService.getSuccessResult();
     }
 
     @PutMapping("/{forumName}/put")
-    public CommonResult postPut()throws Exception{
+    public CommonResult postPutPathVariable (String forumName, @RequestBody PostChangeDto postChangeDto)throws Exception{
+        forumService.postPut(forumName,postChangeDto);
         return responseService.getSuccessResult();
     }
 }
