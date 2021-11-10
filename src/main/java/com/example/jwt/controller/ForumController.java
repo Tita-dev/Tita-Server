@@ -44,28 +44,4 @@ public class ForumController {
         forumService.forumPut(forumChangeDto);
         return responseService.getSuccessResult();
     }
-
-    @GetMapping("/{forumName}/list")
-    public ListResult<String> postList(@PathVariable String forumName)throws Exception{
-        List<String> postListDto = forumService.getForumPostList(forumName);
-        return responseService.getListResult(postListDto);
-    }
-
-    @PostMapping("/{forumName}/create")
-    public CommonResult postCreate(@PathVariable String forumName, @RequestBody PostDto postDto) throws Exception{
-        forumService.postCreate(forumName,postDto);
-        return responseService.getSuccessResult();
-    }
-
-    @DeleteMapping("/{forumName}/delete")
-    public CommonResult postDelete(@PathVariable String forumName, @RequestBody PostDto postDto)throws Exception{
-        forumService.postDelete(forumName,postDto);
-        return responseService.getSuccessResult();
-    }
-
-    @PutMapping("/{forumName}/put")
-    public CommonResult postPutPathVariable (String forumName, @RequestBody PostChangeDto postChangeDto)throws Exception{
-        forumService.postPut(forumName,postChangeDto);
-        return responseService.getSuccessResult();
-    }
 }

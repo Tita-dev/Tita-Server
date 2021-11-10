@@ -21,8 +21,6 @@ import java.util.List;
 public class ForumServiceMpl implements ForumService{
 
     private final ForumRepository forumRepository;
-    private final PostRepository postRepository;
-
 
     @Override
     @Transactional
@@ -65,45 +63,5 @@ public class ForumServiceMpl implements ForumService{
         forum.setForumName(forumChangeDto.getNewForumName());
         forum.setExplanation(forumChangeDto.getNewExplanation());
         return forumRepository.save(forum);
-    }
-
-    @Override
-    public List<String> getForumPostList(String forumName) throws Exception {
-        Forum forum =forumRepository.findByForumName(forumName);
-        List<Post> posts = postRepository.findAllByForum(forum);
-        List<String> postList = new ArrayList<>();
-
-        for (Post post : posts){
-            PostDto postDto = PostDto.builder()
-                    .postName(post.getPostName())
-                    .content(post.getContent())
-                    .build();
-            postList.add(postDto.getPostName());
-            postList.add(postDto.getContent());
-        }
-        return postList;
-    }
-
-    @Override
-    public Post postCreate(String forumName,PostDto postDto) throws Exception {
-        Forum forum = forumRepository.findByForumName(forumName);
-        Post post = postDto.toEntity();
-        post.setForum(forum);
-        return postRepository.save(post);
-    }
-
-    @Override
-    public void postDelete(String forumName, PostDto postDto) throws Exception {
-        Forum forum = forumRepository.findByForumName(forumName);
-        postRepository.deletePostByPostNameAndForum(postDto.getPostName(),forum);
-    }
-
-    @Override
-    public Post postPut(String forumName, PostChangeDto postChangeDto) throws Exception {
-        Forum forum = forumRepository.findByForumName(forumName);
-        Post post = postRepository.findByPostNameAndForum(postChangeDto.getPostName(),forum);
-        post.setPostName(postChangeDto.getNewPostName());
-        post.setContent(postChangeDto.getNewContent());
-        return postRepository.save(post);
     }
 }

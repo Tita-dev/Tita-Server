@@ -2,6 +2,7 @@ package com.example.jwt.controller;
 
 import com.example.jwt.dto.ForumChangeDto;
 import com.example.jwt.dto.ForumDto;
+import com.example.jwt.dto.PostChangeDto;
 import com.example.jwt.dto.PostDto;
 import com.example.jwt.service.ForumService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,7 +16,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
@@ -38,6 +38,9 @@ class ForumControllerTest {
     private ObjectMapper objectMapper;
 
     private MockMvc mvc;
+
+    @Autowired
+    private WebApplicationContext wac;
 
     @BeforeEach
     public void Before(@Autowired ForumController forumController){
@@ -118,64 +121,5 @@ class ForumControllerTest {
         resultActions
                 .andDo(print())
                 .andExpect(status().isOk());
-    }
-
-    @Test
-    @DisplayName("특정 게시판의 게시글들 가져오기")
-    void postList() throws Exception {
-        final ResultActions resultActions = mvc.perform(get("/tita/forum/{forumName}/list", "민경모씹떢")
-                .contentType(MediaType.APPLICATION_JSON));
-
-        resultActions
-                .andDo(print())
-                .andExpect(status().isOk());
-
-    }
-
-    @Test
-    @DisplayName("특정 게시판에 게시글 쓰기")
-    void postCreate() throws Exception{
-        //given
-        PostDto postDto = PostDto.builder()
-                .postName("으악")
-                .content("나죽어")
-                .build();
-
-        String content = objectMapper.writeValueAsString(postDto);
-
-        final ResultActions resultActions = mvc.perform(post("/tita/forum/{forumName}/create","민경모씹떢")
-                .content(content)
-                .contentType(MediaType.APPLICATION_JSON)
-                .characterEncoding("UTF-8"));
-
-        resultActions
-                .andDo(print())
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    @DisplayName("특정 게시판의 게시글 지우기")
-    void postDelete() throws Exception{
-        final ResultActions resultActions = mvc.perform(delete("/tita/forum/{forumName}/delete")
-                .content("content")
-                .contentType("application/json;charset=UTF-8"));
-
-        resultActions
-                .andDo(print())
-                .andExpect(status().isOk());
-
-    }
-
-    @Test
-    @DisplayName("특정 게시판의 게시글 수정")
-    void postPutPathVariable() throws Exception{
-        final ResultActions resultActions = mvc.perform(put("/tita/forum/{forumName}/put")
-                .content("content")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
-
-        resultActions
-                .andDo(print())
-                .andExpect(status().isOk());
-
     }
 }
