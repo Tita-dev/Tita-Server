@@ -1,8 +1,16 @@
 package com.example.jwt.domain;
 
+import lombok.*;
+
 import javax.persistence.*;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Table(name = "comments")
 public class Comments extends BaseEntity{
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comments_idx")
