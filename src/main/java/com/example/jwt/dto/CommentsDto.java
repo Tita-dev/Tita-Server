@@ -12,7 +12,6 @@ import javax.validation.constraints.NotBlank;
 @Builder
 public class CommentsDto {
 
-    @NotBlank
     private String comments;
 
     public Comments toEntity(){

@@ -20,8 +20,6 @@ import java.util.Map;
 public class MemberController {
 
     private final AuthService authService;
-    private final JwtUtil jwtUtil;
-    private final RedisUtil redisUtil;
     private final ResponseService responseService;
 
     @PostMapping("/signup")
@@ -37,7 +35,7 @@ public class MemberController {
 
     @PostMapping("/verify")
     public CommonResult verify(@RequestBody RequestVerifyEmailDto requestVerifyEmailDto) throws NotFoundException {
-        authService.sendVerificationMail(authService.findByUsername(requestVerifyEmailDto.getUsername()));
+        authService.sendVerificationMail(authService.findByUsername(requestVerifyEmailDto.getUsername())); //이메일 안넣으면 오류
         return responseService.getSuccessResult();
     }
 
@@ -65,6 +63,17 @@ public class MemberController {
     public CommonResult changePassword(@RequestBody RequestChangePasswordDto requestChangePasswordDto) {
         authService.changePassword(authService.findByUsername(requestChangePasswordDto.getUsername()),requestChangePasswordDto.getPassword());
         return responseService.getSuccessResult();
+    }
+
+    @PostMapping("/username")
+    public CommonResult requestFindUsername(@RequestBody String email) throws Exception {
+        authService.requestFindUsername(email);
+        return responseService.getSuccessResult();
+    }
+
+    @GetMapping("/username/key")
+    public SingleResult<String> responseFindUsername(@RequestBody String key) throws Exception {
+        return responseService.getSingleResult(authService.responseFindUsername(key));
     }
 
     @GetMapping("/username/{username}/exists")

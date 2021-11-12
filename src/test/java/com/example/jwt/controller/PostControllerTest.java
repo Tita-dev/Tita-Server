@@ -38,9 +38,6 @@ class PostControllerTest {
 
     private MockMvc mvc;
 
-    @Autowired
-    private WebApplicationContext wac;
-
     @BeforeEach
     public void Before(@Autowired PostController postController){
         mvc = MockMvcBuilders.standaloneSetup(postController).build();

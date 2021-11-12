@@ -14,4 +14,6 @@ public interface PostRepository extends JpaRepository<Post,Long> {
 
     Post findByPostNameAndForum(String postName,Forum forum);
 
+    Post findByPostIdx (Long postIdx);
+
 }

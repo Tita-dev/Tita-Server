@@ -31,7 +31,6 @@ public class User extends BaseEntity implements UserDetails{
     @Column(unique = true, nullable = false)
     private String username;
 
-    @Size(min = 8, max = 32)
     @Column(nullable = false)
     private String password;
 
