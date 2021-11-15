@@ -39,7 +39,7 @@ public class PostController {
     }
 
     @PutMapping("/{forumName}/put")
-    public CommonResult postPutPathVariable (String forumName, @RequestBody PostChangeDto postChangeDto)throws Exception{
+    public CommonResult postPut (@PathVariable String forumName, @RequestBody PostChangeDto postChangeDto)throws Exception{
         postService.postPut(forumName,postChangeDto);
         return responseService.getSuccessResult();
     }
