@@ -4,13 +4,16 @@ import com.example.jwt.domain.Forum;
 import com.example.jwt.domain.Post;
 import com.example.jwt.dto.PostChangeDto;
 import com.example.jwt.dto.PostDto;
+import com.example.jwt.repository.CommentsRepository;
 import com.example.jwt.repository.ForumRepository;
 import com.example.jwt.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -18,20 +21,24 @@ public class PostServiceMpl implements PostService{
 
     private final ForumRepository forumRepository;
     private final PostRepository postRepository;
+    private final CommentsRepository commentsRepository;
 
     @Override
-    public List<String> getForumPostList(String forumName) throws Exception {
+    public List<Map<String, String>> getForumPostList(String forumName) throws Exception {
         Forum forum =forumRepository.findByForumName(forumName);
         List<Post> posts = postRepository.findAllByForum(forum);
-        List<String> postList = new ArrayList<>();
+        List<Map<String,String>> postList = new ArrayList<>();
 
         for (Post post : posts){
             PostDto postDto = PostDto.builder()
                     .postName(post.getPostName())
                     .content(post.getContent())
                     .build();
-            postList.add(postDto.getPostName());
-            postList.add(postDto.getContent());
+
+            Map<String,String> map = new HashMap<>();
+            map.put("PostName", postDto.getPostName());
+            map.put("Content", postDto.getContent());
+            postList.add(map);
         }
         return postList;
     }
@@ -47,7 +54,8 @@ public class PostServiceMpl implements PostService{
     @Override
     public void postDelete(String forumName, PostDto postDto) throws Exception {
         Forum forum = forumRepository.findByForumName(forumName);
-
+        Post post = postRepository.findByPostNameAndForum(postDto.getPostName(),forum);
+        commentsRepository.deleteCommentsByPost(post);
         postRepository.deletePostByPostNameAndForum(postDto.getPostName(),forum);
     }
 

@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -32,15 +33,19 @@ class PostServiceTest {
     @Test
     void getForumPostList() throws Exception {
         //given
-        List<String> list;
+        List<Map<String,String>> mapp;
 
         //when
-        list = postService.getForumPostList("민경모씹떢");
+        mapp = postService.getForumPostList("민경모씹떢");
 
         //then
-        for (String i : list){
-            System.out.println(i);
-        }
+        for(Map<String, String> map : mapp) {
+            for (Map.Entry<String, String> entry : map.entrySet()) {
+                String key = entry.getKey();
+                Object value = entry.getValue();
+                System.out.println("key: " + key + " | value: " + value);
+            }
+        };
     }
 
     @Test

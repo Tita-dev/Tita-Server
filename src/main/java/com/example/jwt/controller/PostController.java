@@ -3,6 +3,7 @@ package com.example.jwt.controller;
 import com.example.jwt.domain.response.CommonResult;
 import com.example.jwt.domain.response.ListResult;
 import com.example.jwt.domain.response.ResponseService;
+import com.example.jwt.domain.response.SingleResult;
 import com.example.jwt.dto.PostChangeDto;
 import com.example.jwt.dto.PostDto;
 import com.example.jwt.service.ForumService;
@@ -11,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,9 +23,9 @@ public class PostController {
     private final PostService postService;
 
     @GetMapping("/{forumName}/list")
-    public ListResult<String> postList(@PathVariable String forumName)throws Exception{
-        List<String> postListDto = postService.getForumPostList(forumName);
-        return responseService.getListResult(postListDto);
+    public SingleResult<List<Map<String,String>>> postList(@PathVariable String forumName)throws Exception{
+        List<Map<String,String>> postListDto = postService.getForumPostList(forumName);
+        return responseService.getSingleResult(postListDto);
     }
 
     @PostMapping("/{forumName}/create")

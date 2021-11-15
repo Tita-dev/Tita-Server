@@ -12,6 +12,9 @@ public interface PostRepository extends JpaRepository<Post,Long> {
     @Transactional
     void deletePostByPostNameAndForum(String postName,Forum forum);
 
+    @Transactional
+    void deletePostByForum(Forum forum);
+
     Post findByPostNameAndForum(String postName,Forum forum);
 
     Post findByPostIdx (Long postIdx);

@@ -6,6 +6,7 @@ import com.example.jwt.dto.ForumChangeDto;
 import com.example.jwt.dto.ForumDto;
 import com.example.jwt.dto.PostChangeDto;
 import com.example.jwt.dto.PostDto;
+import com.example.jwt.repository.CommentsRepository;
 import com.example.jwt.repository.ForumRepository;
 import com.example.jwt.repository.PostRepository;
 import lombok.NoArgsConstructor;
@@ -21,6 +22,8 @@ import java.util.List;
 public class ForumServiceMpl implements ForumService{
 
     private final ForumRepository forumRepository;
+    private final PostRepository postRepository;
+    private final CommentsRepository commentsRepository;
 
     @Override
     @Transactional
@@ -51,6 +54,9 @@ public class ForumServiceMpl implements ForumService{
         if (forumRepository.existsByForumName(forumDto.getForumName()) == false){
             throw new Exception();
         }
+        Forum forum = forumRepository.findByForumName(forumDto.getForumName());
+        commentsRepository.deleteCommentsByForum(forum);
+        postRepository.deletePostByForum(forum);
         forumRepository.deleteByForumName(forumDto.getForumName());
     }
 
