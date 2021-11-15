@@ -37,13 +37,13 @@ class CommentsServiceTest {
         Long ad = Long.valueOf(1);
 
         //when
-        map = commentsService.getPostAndComments(ad);
+        //map = commentsService.getPostAndComments(ad);
 
         //then
-        for(String key : map.keySet()) {
-            String value = (String) map.get(key);
-            System.out.println(key + " : " + value);
-        }
+//        for(String key : map.keySet()) {
+//            String value = (String) map.get(key);
+//            System.out.println(key + " : " + value);
+//        }
     }
 
     @Test
