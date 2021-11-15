@@ -15,29 +15,27 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/tita")
+@RequestMapping("/tita/user")
 @RequiredArgsConstructor
 public class MemberController {
 
     private final AuthService authService;
-    private final JwtUtil jwtUtil;
-    private final RedisUtil redisUtil;
     private final ResponseService responseService;
 
     @PostMapping("/signup")
-    public CommonResult signUpUser(@RequestBody MemberDto memberDto) throws Exception{
-        authService.signUpUser(memberDto);
+    public CommonResult signUpUser(@RequestBody UserDto userDto) throws Exception{
+        authService.signUpUser(userDto);
         return responseService.getSuccessResult();
     }
 
     @PostMapping("/login")
-    public SingleResult<Map<String,String >> login (@RequestBody MemberSigninDto memberSigninDto) throws Exception {
-        return responseService.getSingleResult(authService.loginUser(memberSigninDto.getUsername(), memberSigninDto.getPassword()));
+    public SingleResult<Map<String,String >> login (@RequestBody UserSigninDto userSigninDto) throws Exception {
+        return responseService.getSingleResult(authService.loginUser(userSigninDto.getUsername(), userSigninDto.getPassword()));
     }
 
     @PostMapping("/verify")
     public CommonResult verify(@RequestBody RequestVerifyEmailDto requestVerifyEmailDto) throws NotFoundException {
-        authService.sendVerificationMail(authService.findByUsername(requestVerifyEmailDto.getUsername()));
+        authService.sendVerificationMail(authService.findByUsername(requestVerifyEmailDto.getUsername())); //이메일 안넣으면 오류
         return responseService.getSuccessResult();
     }
 
@@ -65,6 +63,17 @@ public class MemberController {
     public CommonResult changePassword(@RequestBody RequestChangePasswordDto requestChangePasswordDto) {
         authService.changePassword(authService.findByUsername(requestChangePasswordDto.getUsername()),requestChangePasswordDto.getPassword());
         return responseService.getSuccessResult();
+    }
+
+    @PostMapping("/username")
+    public CommonResult requestFindUsername(@RequestBody String email) throws Exception {
+        authService.requestFindUsername(email);
+        return responseService.getSuccessResult();
+    }
+
+    @GetMapping("/username/key")
+    public SingleResult<String> responseFindUsername(@RequestBody String key) throws Exception {
+        return responseService.getSingleResult(authService.responseFindUsername(key));
     }
 
     @GetMapping("/username/{username}/exists")

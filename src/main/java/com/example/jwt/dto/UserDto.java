@@ -1,14 +1,15 @@
 package com.example.jwt.dto;
 
 import com.example.jwt.domain.User;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
-public class MemberDto {
+@AllArgsConstructor
+@Builder
+
+public class UserDto {
 
     private String username;
 
@@ -20,14 +21,13 @@ public class MemberDto {
 
     private String email;
 
-
     public User toEntity(){
         return User.builder()
-                .username(username)
-                .password(password)
-                .name(name)
-                .school(school)
-                .email(email)
+                .username(this.username)
+                .password(this.password)
+                .name(this.name)
+                .school(this.school)
+                .email(this.email)
                 .build();
     }
 }

@@ -2,10 +2,10 @@ package com.example.jwt.service;
 
 import com.example.jwt.advice.exception.*;
 import com.example.jwt.domain.UserRole;
-import com.example.jwt.dto.MemberDto;
+import com.example.jwt.dto.UserDto;
 import com.example.jwt.util.*;
 import com.example.jwt.domain.User;
-import com.example.jwt.repository.MemberRepository;
+import com.example.jwt.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ import java.util.Map;
 @Service
 public class AuthServiceMpl implements AuthService{
 
-    private final MemberRepository memberRepository;
+    private final UserRepository userRepository;
     private final RedisUtil redisUtil;
     private final EmailService emailService;
     private final KeyUtil keyUtil;
@@ -25,23 +25,23 @@ public class AuthServiceMpl implements AuthService{
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public void signUpUser(MemberDto memberDto) {
-        if (memberRepository.findByUsername(memberDto.getUsername()) != null) {
+    public User signUpUser(UserDto userDto) {
+        if (userRepository.findByUsername(userDto.getUsername()) != null) {
             throw new UserAlreadyExistsException();
         }
-        if (memberRepository.findByName(memberDto.getName()) != null) {
+        if (userRepository.findByName(userDto.getName()) != null) {
             throw new UserNicknameOverlapException();
         }
-        if (memberRepository.findByEmail(memberDto.getEmail()) != null) {
+        if (userRepository.findByEmail(userDto.getEmail()) != null) {
             throw new UserEmailOverlapException();
         }
-        memberDto.setPassword(passwordEncoder.encode(memberDto.getPassword()));
-        memberRepository.save(memberDto.toEntity());
+        userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        return userRepository.save(userDto.toEntity());
     }
 
     @Override
     public Map<String,String> loginUser(String id, String password){
-        User user = memberRepository.findByUsername(id);
+        User user = userRepository.findByUsername(id);
         if (user == null) throw new UserNotFoundException();
         boolean passwordCheak = passwordEncoder.matches(password,user.getPassword());
         if(!passwordCheak) throw new UserNotFoundException();
@@ -67,7 +67,7 @@ public class AuthServiceMpl implements AuthService{
     @Override
     public void verifyEmail(String key) throws UserNotFoundException {
         String memberId = redisUtil.getData(key);
-        User user = memberRepository.findByUsername(memberId);
+        User user = userRepository.findByUsername(memberId);
         if (user == null) throw new InvalidAuthenticationNumberException();
         modifyUserRole(user,UserRole.ROLE_USER);
         redisUtil.deleteData(key);
@@ -76,29 +76,29 @@ public class AuthServiceMpl implements AuthService{
     @Override
     public void modifyUserRole(User user, UserRole userRole) {
         user.setRole(userRole);
-        memberRepository.save(user);
+        userRepository.save(user);
     }
 
     @Override
     public User findByUsername(String username) throws UserNotFoundException {
-        User user = memberRepository.findByUsername(username);
+        User user = userRepository.findByUsername(username);
         if (user ==null) throw new UserNotFoundException();
         return user;
     }
 
     @Override
     public void requestChangePassword(User user) throws UserNotFoundException{
-        String authkey = keyUtil.getKey(6);
+        String authKey = keyUtil.getKey(6);
         if(user == null) throw new UserNotFoundException();
-        redisUtil.setDataExpire(authkey, user.getUsername(),60 * 30L);
-        emailService.sendMail(user.getEmail(),"[Tita] 사용자 비밀번호 변경 메일입니다.","인증번호는 "+ authkey);
+        redisUtil.setDataExpire(authKey, user.getUsername(),60 * 30L);
+        emailService.sendMail(user.getEmail(),"[Tita] 사용자 비밀번호 변경 메일입니다.","인증번호는 "+ authKey);
     }
 
     @Override
     public void isPasswordKeyValidate(String key){
-        String memberId = redisUtil.getData(key);
-        User user = memberRepository.findByUsername(memberId);
-        if (user ==null) throw new InvalidAuthenticationNumberException();
+        String userName = redisUtil.getData(key);
+        User user = userRepository.findByUsername(userName);
+        if (user == null) throw new InvalidAuthenticationNumberException();
         modifyUserRole(user,UserRole.ROLE_PASSWORD_CHANGE);
     }
 
@@ -107,17 +107,34 @@ public class AuthServiceMpl implements AuthService{
         if(user == null) throw new UserNotFoundException();
         user.setPassword(passwordEncoder.encode(password));
         user.setRole(UserRole.ROLE_USER);
-        memberRepository.save(user);
+        userRepository.save(user);
+    }
+
+    @Override
+    public void requestFindUsername(String email) throws Exception {
+        User user = userRepository.findByEmail(email);
+        if(user == null) throw new UserNotFoundException();
+        String authKey = keyUtil.getKey(6);
+        redisUtil.setDataExpire(authKey, user.getUsername(), 60 * 30L);
+        emailService.sendMail(user.getEmail(), "[Tita] 사용자 아이디 확인 메일입니다.","인증번호는 "+ authKey);
+    }
+
+    @Override
+    public String responseFindUsername(String key) throws Exception {
+        String userName = redisUtil.getData(key);
+        User user = userRepository.findByUsername(userName);
+        if (user == null) throw new InvalidAuthenticationNumberException();
+        return user.getUsername();
     }
 
     @Override
     public boolean checkUsernameDuplicate(String username) {
-        return memberRepository.existsByUsername(username);
+        return userRepository.existsByUsername(username);
     }
 
     @Override
     public boolean checkNameDuplicate(String name) {
-        return memberRepository.existsByName(name);
+        return userRepository.existsByName(name);
     }
 
 }
