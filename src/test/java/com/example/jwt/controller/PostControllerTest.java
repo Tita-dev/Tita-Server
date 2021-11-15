@@ -99,7 +99,7 @@ class PostControllerTest {
 
     @Test
     @DisplayName("특정 게시판의 게시글 수정")
-    void postPutPathVariable() throws Exception{
+    void postPut() throws Exception{
         //given
         PostChangeDto postChangeDto = new PostChangeDto();
         postChangeDto.setPostName("민경모는 에밀리아");

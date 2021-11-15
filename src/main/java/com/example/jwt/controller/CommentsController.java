@@ -17,7 +17,6 @@ import java.util.List;
 public class CommentsController {
 
     private final ResponseService responseService;
-    private final PostService postService;
     private final CommentsService commentsService;
 
     @GetMapping("/{forumName}/{postIdx}")
@@ -33,7 +32,7 @@ public class CommentsController {
     }
 
     @DeleteMapping("/{forumName}/{postIdx}/delete")
-    public CommonResult postDelete(@PathVariable Long postIdx ,@RequestBody CommentsDto commentsDto)throws Exception{
+    public CommonResult postDelete (@PathVariable(name = "postIdx") Long postIdx ,@RequestBody CommentsDto commentsDto)throws Exception{
         commentsService.commentsDelete(postIdx,commentsDto);
         return responseService.getSuccessResult();
     }
