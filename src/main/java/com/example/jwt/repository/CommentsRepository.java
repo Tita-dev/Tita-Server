@@ -1,6 +1,7 @@
 package com.example.jwt.repository;
 
 import com.example.jwt.domain.Comments;
+import com.example.jwt.domain.Forum;
 import com.example.jwt.domain.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +16,9 @@ public interface CommentsRepository extends JpaRepository <Comments, Long> {
 
     @Transactional
     void deleteCommentsByPost(Post post);
+
+    @Transactional
+    void deleteCommentsByForum(Forum forum);
 
     Comments findByCommentsContentAndPost(String commentsContent, Post post);
 }

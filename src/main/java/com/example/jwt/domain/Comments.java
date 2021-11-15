@@ -17,6 +17,10 @@ public class Comments extends BaseEntity{
     private Long commentsIdx;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "forumIdx")
+    private Forum forum;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "postIdx")
     private Post post;
 

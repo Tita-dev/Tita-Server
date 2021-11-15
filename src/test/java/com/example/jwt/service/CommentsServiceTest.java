@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -31,16 +32,17 @@ class CommentsServiceTest {
     @Test
     void getPostAndComments() throws Exception{
         //given
-        List<String> list;
+        Map<String,String> map;
 
         Long ad = Long.valueOf(1);
 
         //when
-        list = commentsService.getPostAndComments(ad);
+        map = commentsService.getPostAndComments(ad);
 
         //then
-        for (String i : list) {
-            System.out.println(i);
+        for(String key : map.keySet()) {
+            String value = (String) map.get(key);
+            System.out.println(key + " : " + value);
         }
     }
 
@@ -51,10 +53,11 @@ class CommentsServiceTest {
                 .commentsContent("민경모 개씹덕이네 ㄹㅇzㅋㅋㅋ")
                 .build();
 
-        Long ad = Long.valueOf(2);
+        String forumName = "ㅇㅇㅇㅇ";
+        Long postIdx = Long.valueOf(2);
 
         //when
-        Comments comments = commentsService.commentsCreate(ad,commentsDto);
+        Comments comments = commentsService.commentsCreate(forumName,postIdx,commentsDto);
 
         //then
         assertEquals(commentsDto.getCommentsContent(),comments.getCommentsContent());
