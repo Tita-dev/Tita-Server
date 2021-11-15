@@ -47,6 +47,7 @@ public class PostServiceMpl implements PostService{
     @Override
     public void postDelete(String forumName, PostDto postDto) throws Exception {
         Forum forum = forumRepository.findByForumName(forumName);
+
         postRepository.deletePostByPostNameAndForum(postDto.getPostName(),forum);
     }
 

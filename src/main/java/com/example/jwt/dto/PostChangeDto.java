@@ -9,6 +9,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class PostChangeDto {
     private String postName;
-    private String NewPostName;
-    private String NewContent;
+    private String newPostName;
+    private String newContent;
 }

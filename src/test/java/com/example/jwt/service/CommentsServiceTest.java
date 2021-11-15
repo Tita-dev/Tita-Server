@@ -17,7 +17,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Slf4j
-@Transactional
 class CommentsServiceTest {
 
     @Autowired
@@ -49,16 +48,16 @@ class CommentsServiceTest {
     void commentsCreate() throws Exception{
         //given
         CommentsDto commentsDto = CommentsDto.builder()
-                .comments("민경모 개씹덕이네 ㄹㅇㅋㅋ")
+                .commentsContent("민경모 개씹덕이네 ㄹㅇzㅋㅋㅋ")
                 .build();
 
-        Long ad = Long.valueOf(1);
+        Long ad = Long.valueOf(2);
 
         //when
         Comments comments = commentsService.commentsCreate(ad,commentsDto);
 
         //then
-        assertEquals(commentsDto.getComments(),comments.getComments());
+        assertEquals(commentsDto.getCommentsContent(),comments.getCommentsContent());
     }
 
     @Test
@@ -66,7 +65,7 @@ class CommentsServiceTest {
 
         //given
         CommentsDto commentsDto = CommentsDto.builder()
-                .comments("민경모 개씹덕이네 ㄹㅇㅋㅋ")
+                .commentsContent("내용")
                 .build();
 
         Long ad = Long.valueOf(1);
@@ -76,6 +75,6 @@ class CommentsServiceTest {
         commentsService.commentsDelete(ad,commentsDto);
 
         //then
-        assertEquals(null,commentsRepository.findByCommentsAndPost(commentsDto.getComments(),post));
+        assertEquals(null,commentsRepository.findByCommentsContentAndPost(commentsDto.getCommentsContent(),post));
     }
 }

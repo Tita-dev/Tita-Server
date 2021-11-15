@@ -3,8 +3,6 @@ package com.example.jwt.dto;
 import com.example.jwt.domain.Comments;
 import lombok.*;
 
-import javax.validation.constraints.NotBlank;
-
 @Getter
 @Setter
 @NoArgsConstructor
@@ -12,11 +10,11 @@ import javax.validation.constraints.NotBlank;
 @Builder
 public class CommentsDto {
 
-    private String comments;
+    private String commentsContent;
 
     public Comments toEntity(){
         return Comments.builder()
-                .comments(this.getComments())
+                .commentsContent(this.getCommentsContent())
                 .build();
     }
 

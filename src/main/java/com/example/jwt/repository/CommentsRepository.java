@@ -11,7 +11,10 @@ public interface CommentsRepository extends JpaRepository <Comments, Long> {
     List<Comments> findAllByPost(Post post);
 
     @Transactional
-    void deleteByCommentsAndPost(String comments, Post post);
+    void deleteCommentsByCommentsContentAndPost(String comments, Post post);
 
-    Comments findByCommentsAndPost(String comments, Post post);
+    @Transactional
+    void deleteCommentsByPost(Post post);
+
+    Comments findByCommentsContentAndPost(String commentsContent, Post post);
 }

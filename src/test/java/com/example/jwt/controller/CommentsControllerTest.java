@@ -55,7 +55,7 @@ class CommentsControllerTest {
     @DisplayName("댓글 작성")
     void commentsCreate() throws Exception {
         CommentsDto commentsDto = CommentsDto.builder()
-                .comments("카페에서 공부중")
+                .commentsContent("카페에서 공부중")
                 .build();
 
         String content = objectMapper.writeValueAsString(commentsDto);
@@ -74,7 +74,7 @@ class CommentsControllerTest {
     @DisplayName("댓글 삭제")
     void postDelete() throws Exception {
         CommentsDto commentsDto = CommentsDto.builder()
-                .comments("민경모 개씹덕이네 ㄹㅇㅋㅋ")
+                .commentsContent("민경모 개씹덕이네 ㄹㅇㅋㅋ")
                 .build();
 
         String content = objectMapper.writeValueAsString(commentsDto);

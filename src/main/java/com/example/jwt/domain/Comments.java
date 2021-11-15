@@ -24,6 +24,6 @@ public class Comments extends BaseEntity{
     @JoinColumn(name = "userIdx")
     private User user;
 
-    @Column(name = "comments", nullable = false)
-    private String comments;
+    @Column(name = "comments_content", nullable = false)
+    private String commentsContent;
 }

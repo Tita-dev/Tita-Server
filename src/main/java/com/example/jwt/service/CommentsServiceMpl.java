@@ -28,9 +28,9 @@ public class CommentsServiceMpl implements CommentsService{
         list.add(post.getContent());
         for (Comments comments : commentsList){
             CommentsDto commentsDto = CommentsDto.builder()
-                    .comments(comments.getComments())
+                    .commentsContent(comments.getCommentsContent())
                     .build();
-            list.add(commentsDto.getComments());
+            list.add(commentsDto.getCommentsContent());
         }
         return list;
     }
@@ -46,6 +46,6 @@ public class CommentsServiceMpl implements CommentsService{
     @Override
     public void commentsDelete(Long postIdx, CommentsDto commentsDto) throws Exception {
         Post post = postRepository.findByPostIdx(postIdx);
-        commentsRepository.deleteByCommentsAndPost(commentsDto.getComments(), post);
+        commentsRepository.deleteCommentsByCommentsContentAndPost(commentsDto.getCommentsContent(), post);
     }
 }
