@@ -17,7 +17,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/tita/user")
 @RequiredArgsConstructor
-public class MemberController {
+public class AuthController {
 
     private final AuthService authService;
     private final ResponseService responseService;
