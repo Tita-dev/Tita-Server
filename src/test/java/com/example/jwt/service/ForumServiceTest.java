@@ -34,7 +34,7 @@ class ForumServiceTest {
 
     @DisplayName("게시판 목록 구현")
     @Test
-    void getForumList() throws Exception{
+    void getForumList() throws Exception {
         //given
         List<String> list;
 
@@ -42,14 +42,14 @@ class ForumServiceTest {
         list = forumService.getForumList();
 
         //than
-        for (String i : list){
+        for (String i : list) {
             System.out.println(i);
         }
     }
 
     @DisplayName("게시판 생성")
     @Test
-    void forumCreate() throws Exception{
+    void forumCreate() throws Exception {
         //given
         ForumDto forumDto = ForumDto.builder()
                 .forumName("민경ㅇㅇㅇㅇㅇㅇ")
@@ -58,12 +58,12 @@ class ForumServiceTest {
         //when
         Forum forum = forumService.forumCreate(forumDto);
         //then
-        assertEquals(forumDto.getForumName(),forum.getForumName());
+        assertEquals(forumDto.getForumName(), forum.getForumName());
     }
 
     @DisplayName("게시판 삭제")
     @Test
-    void forumDelete() throws Exception{
+    void forumDelete() throws Exception {
         //given
         ForumDto forumDto = ForumDto.builder()
                 .forumName("민경모모모모모모모")
@@ -73,12 +73,12 @@ class ForumServiceTest {
         forumService.forumDelete(forumDto);
 
         //then
-        assertEquals(false,forumRepository.existsByForumName(forumDto.getForumName()));
+        assertEquals(false, forumRepository.existsByForumName(forumDto.getForumName()));
     }
 
     @DisplayName("게시판 수정")
     @Test
-    void forumPut() throws Exception{
+    void forumPut() throws Exception {
         //given
         ForumChangeDto forumChangeDto = new ForumChangeDto();
         forumChangeDto.setForumName("민경모민경모");
@@ -89,6 +89,6 @@ class ForumServiceTest {
         Forum forum = forumService.forumPut(forumChangeDto);
 
         //then
-        assertEquals(forumChangeDto.getNewForumName(),forum.getForumName());
+        assertEquals(forumChangeDto.getNewForumName(), forum.getForumName());
     }
 }

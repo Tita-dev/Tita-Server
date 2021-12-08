@@ -8,7 +8,7 @@ import java.util.Map;
 
 public interface CommentsService {
 
-    List<Map<String,String>> getPostAndComments(Long postIdx) throws Exception;
+    List<Map<String, String>> getPostAndComments(Long postIdx) throws Exception;
 
     Comments commentsCreate(String forumName, Long postIdx, CommentsDto commentsDto) throws Exception;
 

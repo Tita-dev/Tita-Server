@@ -43,20 +43,20 @@ class ForumControllerTest {
     private WebApplicationContext wac;
 
     @BeforeEach
-    public void Before(@Autowired ForumController forumController){
+    public void Before(@Autowired ForumController forumController) {
         mvc = MockMvcBuilders.standaloneSetup(forumController).build();
     }
 
     @Test
     @DisplayName("게시판 목록 불러오기")
-    void forumList() throws Exception{
+    void forumList() throws Exception {
 
         final ResultActions resultActions = mvc.perform(get("/tita/forum/list")
                 .contentType(MediaType.APPLICATION_JSON));
 
-            resultActions
-                    .andDo(print())
-                    .andExpect(status().isOk());
+        resultActions
+                .andDo(print())
+                .andExpect(status().isOk());
 
 //            MvcResult mvcResult = resultActions.andExpect(status().isOk()).andReturn();
 //            list = mvcResult.getResponse().getContentType();
@@ -64,7 +64,7 @@ class ForumControllerTest {
 
     @Test
     @DisplayName("게시판 생성")
-    void forumCreate() throws Exception{
+    void forumCreate() throws Exception {
         //given
         ForumDto forumDto = ForumDto.builder()
                 .forumName("최윤성성")
@@ -84,7 +84,7 @@ class ForumControllerTest {
 
     @Test
     @DisplayName("게시판 삭제")
-    void forumDelete() throws Exception{
+    void forumDelete() throws Exception {
         //given
         ForumDto forumDto = ForumDto.builder()
                 .forumName("최윤성성")
@@ -105,7 +105,7 @@ class ForumControllerTest {
 
     @Test
     @DisplayName("게시판 수정")
-    void forumPut() throws Exception{
+    void forumPut() throws Exception {
         //given
         ForumChangeDto forumDto = new ForumChangeDto();
         forumDto.setForumName("최윤성성");

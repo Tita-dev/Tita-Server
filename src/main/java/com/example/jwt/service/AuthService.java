@@ -10,11 +10,11 @@ import java.util.Map;
 
 public interface AuthService {
 
-    final String REDIS_CHANGE_PASSWORD_PREFIX="CPW";
+    final String REDIS_CHANGE_PASSWORD_PREFIX = "CPW";
 
     User signUpUser(UserDto userDto);
 
-    Map<String,String> loginUser(String id, String password) throws UserLoginFailedException;
+    Map<String, String> loginUser(String id, String password) throws UserLoginFailedException;
 
     void sendVerificationMail(User user) throws UserNotFoundException; //email send Exception
 
@@ -26,7 +26,7 @@ public interface AuthService {
 
     void requestChangePassword(User user) throws UserNotFoundException;
 
-    void isPasswordKeyValidate(String key)throws UserNotFoundException;
+    void isPasswordKeyValidate(String key) throws UserNotFoundException;
 
     void changePassword(User user, String password) throws UserNotFoundException;
 

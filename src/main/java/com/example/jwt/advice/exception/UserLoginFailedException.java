@@ -1,13 +1,15 @@
 package com.example.jwt.advice.exception;
 
-public class UserLoginFailedException extends RuntimeException{
-    public UserLoginFailedException (String msg, Throwable t){
+public class UserLoginFailedException extends RuntimeException {
+    public UserLoginFailedException(String msg, Throwable t) {
         super(msg, t);
     }
-    public UserLoginFailedException (String msg){
+
+    public UserLoginFailedException(String msg) {
         super(msg);
     }
-    public UserLoginFailedException (){
+
+    public UserLoginFailedException() {
         super();
     }
 }

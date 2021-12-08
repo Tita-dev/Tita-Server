@@ -7,16 +7,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-public interface PostRepository extends JpaRepository<Post,Long> {
-    List<Post> findAllByForum (Forum forum);
+public interface PostRepository extends JpaRepository<Post, Long> {
+    List<Post> findAllByForum(Forum forum);
+
     @Transactional
-    void deletePostByPostNameAndForum(String postName,Forum forum);
+    void deletePostByPostNameAndForum(String postName, Forum forum);
 
     @Transactional
     void deletePostByForum(Forum forum);
 
-    Post findByPostNameAndForum(String postName,Forum forum);
+    Post findByPostNameAndForum(String postName, Forum forum);
 
-    Post findByPostIdx (Long postIdx);
+    Post findByPostIdx(Long postIdx);
 
 }

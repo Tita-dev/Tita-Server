@@ -1,13 +1,15 @@
 package com.example.jwt.advice.exception;
 
-public class UserAlreadyExistsException extends RuntimeException{
-    public UserAlreadyExistsException(String msg, Throwable t){
-        super(msg,t);
+public class UserAlreadyExistsException extends RuntimeException {
+    public UserAlreadyExistsException(String msg, Throwable t) {
+        super(msg, t);
     }
-    public UserAlreadyExistsException(String msg){
+
+    public UserAlreadyExistsException(String msg) {
         super(msg);
     }
-    public UserAlreadyExistsException(){
+
+    public UserAlreadyExistsException() {
         super();
     }
 }

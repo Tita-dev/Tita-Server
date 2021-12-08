@@ -19,7 +19,7 @@ public class KeyUtil {
         StringBuffer buffer = new StringBuffer();
         int num = 0;
 
-        while(buffer.length() < size) {
+        while (buffer.length() < size) {
             num = random.nextInt(10);
             buffer.append(num);
         }
