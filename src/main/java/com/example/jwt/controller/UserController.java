@@ -77,12 +77,12 @@ public class UserController {
     }
 
     @GetMapping("/username/{username}/exists")
-    public SingleResult<Boolean> checkUsernameDuplicate(@PathVariable String username) {
+    public SingleResult<Boolean> checkUsernameDuplicate(@PathVariable String username) throws Exception{
         return responseService.getSingleResult(authService.checkUsernameDuplicate(username));
     }
 
     @GetMapping("/name/{name}/exists")
-    public SingleResult<Boolean> checkNameDuplicate(@PathVariable String name) {
+    public SingleResult<Boolean> checkNameDuplicate(@PathVariable String name) throws Exception{
         return responseService.getSingleResult(authService.checkNameDuplicate(name));
     }
 }

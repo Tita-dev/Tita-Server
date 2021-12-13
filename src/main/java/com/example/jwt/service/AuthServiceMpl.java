@@ -50,7 +50,7 @@ public class AuthServiceMpl implements AuthService {
         redisUtil.setDataExpire(refreshJwt, user.getUsername(), JwtUtil.REFRESH_TOKEN_VALIDATION_SECOND);
         Map<String, String> map = new HashMap<>();
         map.put("username", user.getUsername());
-        map.put("acessToken", accessToken);
+        map.put("accessToken", accessToken);
         map.put("refreshToken", refreshJwt);
         return map;
     }
@@ -128,12 +128,12 @@ public class AuthServiceMpl implements AuthService {
     }
 
     @Override
-    public boolean checkUsernameDuplicate(String username) {
+    public boolean checkUsernameDuplicate(String username) throws Exception{
         return userRepository.existsByUsername(username);
     }
 
     @Override
-    public boolean checkNameDuplicate(String name) {
+    public boolean checkNameDuplicate(String name) throws Exception{
         return userRepository.existsByName(name);
     }
 
