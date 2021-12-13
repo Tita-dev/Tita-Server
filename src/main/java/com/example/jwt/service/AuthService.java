@@ -34,7 +34,7 @@ public interface AuthService {
 
     String responseFindUsername(String key) throws Exception;
 
-    boolean checkUsernameDuplicate(String username);
+    boolean checkUsernameDuplicate(String username) throws Exception;
 
-    boolean checkNameDuplicate(String name);
+    boolean checkNameDuplicate(String name) throws Exception;
 }

@@ -1,11 +1,15 @@
 package com.example.jwt.util;
 
+import com.example.jwt.config.MyUserDetails;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +18,7 @@ import java.security.Key;
 import java.util.Date;
 
 @Component
+@RequiredArgsConstructor
 public class JwtUtil {
 
     public final static long TOKEN_VALIDATION_SECOND = 1000L * 10;
@@ -21,6 +26,8 @@ public class JwtUtil {
 
     public final static String ACCESS_TOKEN_NAME = "accessToken";
     public final static String REFRESH_TOKEN_NAME = "refreshToken";
+
+    private final MyUserDetails myUserDetails;
 
     @Value("${spring.jwt.secret}")
     private String SECRET_KEY;
@@ -37,6 +44,12 @@ public class JwtUtil {
                 .parseClaimsJws(token)
                 .getBody();
     }
+
+    public Authentication getAuthentication(String token){
+        UserDetails userDetails = myUserDetails.loadUserByUsername(getUsername(token));
+        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+    }
+
 
     public String getUsername(String token) {
         return extractAllClaims(token).get("username", String.class);
