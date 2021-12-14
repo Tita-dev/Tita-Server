@@ -10,7 +10,6 @@ import io.jsonwebtoken.MalformedJwtException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -46,7 +45,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         String refreshusername = null;
 
         try {
-            if (accessJwt != null) { // 가져온 토큰이 올바른 값이 왔는지 확인
+            if (accessJwt != null && accessJwt.startsWith("Bearer ")) { // 가져온 토큰이 올바른 값이 왔는지 확인
+                accessJwt = accessJwt.split(" ")[1].trim();
                 username = jwtUtil.getUsername(accessJwt); //해당 토큰의 안에 있는 유저이름을 가져온다.
             }
             if (username != null) { //유저 이름을 성공적으로 가져왔을 경우
@@ -54,8 +54,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
                 try {
                     if (jwtUtil.validateToken(accessJwt, userDetails)) { //토큰의 만료확인과 토큰속의 Username 과 UserDetails 속의 Username이 일치하는지 확인.
-                        Authentication authentication = jwtUtil.getAuthentication(accessJwt);
-                        SecurityContextHolder.getContext().setAuthentication(authentication); // 인증 정보가 일치함으로 context 에 인증정보를 저장하고 통과, filter 외부의 컨트롤러에서도 인증정보를 참조하기에 저장해두어야 한다.
+                        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities()); //인증을 위한 값을 담음
+                        usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(req)); //인증
+                        SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken); // 인증 정보가 일치함으로 context 에 인증정보를 저장하고 통과, filter 외부의 컨트롤러에서도 인증정보를 참조하기에 저장해두어야 한다.
                     }
                 } catch (NullPointerException e) {
                     throw new UserNotFoundException();
