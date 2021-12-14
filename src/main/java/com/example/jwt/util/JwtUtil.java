@@ -1,10 +1,7 @@
 package com.example.jwt.util;
 
 import com.example.jwt.config.MyUserDetails;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,7 +34,7 @@ public class JwtUtil {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public Claims extractAllClaims(String token) throws ExpiredJwtException {
+    public Claims extractAllClaims(String token) throws ExpiredJwtException,IllegalArgumentException, MalformedJwtException, UnsupportedJwtException {
         return Jwts.parserBuilder()
                 .setSigningKey(getSigningKey(SECRET_KEY))
                 .build()
