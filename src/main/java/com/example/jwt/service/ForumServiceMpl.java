@@ -49,10 +49,6 @@ public class ForumServiceMpl implements ForumService {
         if (forumRepository.existsByForumName(forumDto.getForumName()) == true) {
             throw new Exception();
         }
-        User user = currentUserUtil.getCurrentUser();
-        System.out.println("asdasdasd");
-        System.out.println(user.getUsername());
-        System.out.println("asdasdasd");
         Forum forum = forumDto.toEntity();
         forum.setUser(currentUserUtil.getCurrentUser());
         return forumRepository.save(forum);

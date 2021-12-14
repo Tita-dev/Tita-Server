@@ -7,6 +7,7 @@ import com.example.jwt.dto.PostDto;
 import com.example.jwt.repository.CommentsRepository;
 import com.example.jwt.repository.ForumRepository;
 import com.example.jwt.repository.PostRepository;
+import com.example.jwt.util.CurrentUserUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,7 @@ public class PostServiceMpl implements PostService {
     private final ForumRepository forumRepository;
     private final PostRepository postRepository;
     private final CommentsRepository commentsRepository;
+    private final CurrentUserUtil currentUserUtil;
 
     @Override
     public List<Map<String, String>> getForumPostList(String forumName) throws Exception {
@@ -48,6 +50,7 @@ public class PostServiceMpl implements PostService {
         Forum forum = forumRepository.findByForumName(forumName);
         Post post = postDto.toEntity();
         post.setForum(forum);
+        post.setUser(currentUserUtil.getCurrentUser());
         return postRepository.save(post);
     }
 
