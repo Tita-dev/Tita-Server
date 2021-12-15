@@ -44,8 +44,7 @@ public class AuthServiceMpl implements AuthService {
 
     @Override
     public Map<String, String> loginUser(String id, String password) {
-        User user = userRepository.findByUsername(id);
-        if (user == null) throw new UserNotFoundException();
+        User user = userRepository.findByUsername(id).orElseThrow(()-> new UserNotFoundException());
         boolean passwordCheak = passwordEncoder.matches(password, user.getPassword());
         if (!passwordCheak) throw new UserNotFoundException();
         final String accessToken = jwtUtil.generateToken(user.getUsername());
@@ -75,8 +74,7 @@ public class AuthServiceMpl implements AuthService {
     @Override
     public void verifyEmail(String key) throws UserNotFoundException {
         String memberId = redisUtil.getData(key);
-        User user = userRepository.findByUsername(memberId);
-        if (user == null) throw new InvalidAuthenticationNumberException();
+        User user = userRepository.findByUsername(memberId).orElseThrow(()-> new InvalidAuthenticationNumberException());
         modifyUserRole(user, UserRole.ROLE_USER);
         redisUtil.deleteData(key);
     }
@@ -89,8 +87,7 @@ public class AuthServiceMpl implements AuthService {
 
     @Override
     public User findByUsername(String username) throws UserNotFoundException {
-        User user = userRepository.findByUsername(username);
-        if (user == null) throw new UserNotFoundException();
+        User user = userRepository.findByUsername(username).orElseThrow(()-> new UserNotFoundException());
         return user;
     }
 
@@ -105,8 +102,7 @@ public class AuthServiceMpl implements AuthService {
     @Override
     public void isPasswordKeyValidate(String key) {
         String userName = redisUtil.getData(key);
-        User user = userRepository.findByUsername(userName);
-        if (user == null) throw new InvalidAuthenticationNumberException();
+        User user = userRepository.findByUsername(userName).orElseThrow(()-> new InvalidAuthenticationNumberException());
         modifyUserRole(user, UserRole.ROLE_PASSWORD_CHANGE);
     }
 
@@ -130,8 +126,7 @@ public class AuthServiceMpl implements AuthService {
     @Override
     public String responseFindUsername(String key) throws Exception {
         String userName = redisUtil.getData(key);
-        User user = userRepository.findByUsername(userName);
-        if (user == null) throw new InvalidAuthenticationNumberException();
+        User user = userRepository.findByUsername(userName).orElseThrow(()-> new InvalidAuthenticationNumberException());
         return user.getUsername();
     }
 
