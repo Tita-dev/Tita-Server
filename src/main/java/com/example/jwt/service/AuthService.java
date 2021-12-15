@@ -4,7 +4,6 @@ import com.example.jwt.advice.exception.UserLoginFailedException;
 import com.example.jwt.advice.exception.UserNotFoundException;
 import com.example.jwt.domain.User;
 import com.example.jwt.domain.UserRole;
-import com.example.jwt.dto.LogoutDto;
 import com.example.jwt.dto.UserDto;
 
 import java.util.Map;

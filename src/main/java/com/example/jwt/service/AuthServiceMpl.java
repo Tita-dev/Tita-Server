@@ -2,16 +2,12 @@ package com.example.jwt.service;
 
 import com.example.jwt.advice.exception.*;
 import com.example.jwt.domain.UserRole;
-import com.example.jwt.dto.LogoutDto;
 import com.example.jwt.dto.UserDto;
 import com.example.jwt.util.*;
 import com.example.jwt.domain.User;
 import com.example.jwt.repository.UserRepository;
-import io.jsonwebtoken.ExpiredJwtException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
