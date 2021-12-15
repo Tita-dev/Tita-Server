@@ -11,15 +11,18 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 @Table(name = "postLike")
-@IdClass(PostLikeID.class)
 public class PostLike extends BaseEntity{
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userIdx")
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "postLike_idx")
+    private Long postLikeIdx;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "userIdx")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "postIdx")
-    @Id
     private Post post;
 }
