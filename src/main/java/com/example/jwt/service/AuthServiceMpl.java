@@ -2,11 +2,16 @@ package com.example.jwt.service;
 
 import com.example.jwt.advice.exception.*;
 import com.example.jwt.domain.UserRole;
+import com.example.jwt.dto.LogoutDto;
 import com.example.jwt.dto.UserDto;
 import com.example.jwt.util.*;
 import com.example.jwt.domain.User;
 import com.example.jwt.repository.UserRepository;
+import io.jsonwebtoken.ExpiredJwtException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +20,7 @@ import java.util.Map;
 
 @RequiredArgsConstructor
 @Service
+@Slf4j
 public class AuthServiceMpl implements AuthService {
 
     private final UserRepository userRepository;
@@ -23,6 +29,7 @@ public class AuthServiceMpl implements AuthService {
     private final KeyUtil keyUtil;
     private final JwtUtil jwtUtil;
     private final PasswordEncoder passwordEncoder;
+    private final CurrentUserUtil currentUserUtil;
 
     @Override
     public User signUpUser(UserDto userDto) {
@@ -47,12 +54,17 @@ public class AuthServiceMpl implements AuthService {
         if (!passwordCheak) throw new UserNotFoundException();
         final String accessToken = jwtUtil.generateToken(user.getUsername());
         final String refreshJwt = jwtUtil.generateRefreshToken(user.getUsername());
-        redisUtil.setDataExpire(refreshJwt, user.getUsername(), JwtUtil.REFRESH_TOKEN_VALIDATION_SECOND);
+        redisUtil.setDataExpire(user.getUsername(), refreshJwt, JwtUtil.REFRESH_TOKEN_VALIDATION_SECOND);
         Map<String, String> map = new HashMap<>();
         map.put("username", user.getUsername());
         map.put("accessToken", accessToken);
         map.put("refreshToken", refreshJwt);
         return map;
+    }
+
+    @Override
+    public void logout(){
+        redisUtil.deleteData(currentUserUtil.getCurrentUser().getUsername());
     }
 
     @Override

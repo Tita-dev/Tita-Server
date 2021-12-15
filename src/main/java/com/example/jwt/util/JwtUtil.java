@@ -84,11 +84,17 @@ public class JwtUtil {
         return jwt;
     }
 
+    public Long getExpiration(String accessToken){
+        Date expiration = Jwts.parserBuilder().setSigningKey(SECRET_KEY).build().parseClaimsJws(accessToken).getBody().getExpiration();
+        return expiration.getTime();
+    }
+
     public Boolean validateToken(String token, UserDetails userDetails) {
         final String username = getUsername(token);
-
         return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
     }
 
-
+    public Boolean validateToken(String token) {
+        return !isTokenExpired(token);
+    }
 }

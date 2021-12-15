@@ -4,6 +4,7 @@ import com.example.jwt.advice.exception.UserLoginFailedException;
 import com.example.jwt.advice.exception.UserNotFoundException;
 import com.example.jwt.domain.User;
 import com.example.jwt.domain.UserRole;
+import com.example.jwt.dto.LogoutDto;
 import com.example.jwt.dto.UserDto;
 
 import java.util.Map;
@@ -15,6 +16,8 @@ public interface AuthService {
     User signUpUser(UserDto userDto);
 
     Map<String, String> loginUser(String id, String password) throws UserLoginFailedException;
+
+    void logout();
 
     void sendVerificationMail(User user) throws UserNotFoundException; //email send Exception
 
