@@ -8,6 +8,8 @@ import com.example.jwt.util.JwtUtil;
 import com.example.jwt.util.RedisUtil;
 import com.example.jwt.domain.User;
 import com.example.jwt.service.AuthService;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -28,9 +30,19 @@ public class UserController {
         return responseService.getSuccessResult();
     }
 
+
     @PostMapping("/login")
     public SingleResult<Map<String, String>> login(@RequestBody UserSigninDto userSigninDto) throws Exception {
         return responseService.getSingleResult(authService.loginUser(userSigninDto.getUsername(), userSigninDto.getPassword()));
+    }
+
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Authorization", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header")
+    })
+    @PostMapping("/logout")
+    public CommonResult logout() throws Exception{
+        authService.logout();
+        return responseService.getSuccessResult();
     }
 
     @PostMapping("/verify")
