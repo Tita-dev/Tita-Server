@@ -23,22 +23,34 @@ public class ExceptionController {
     }
 
     @GetMapping(value = "/access-token-expired")
-    public CommonResult accessTokenExpired(){throw new AccessTokenExpiredException();}
+    public CommonResult accessTokenExpired() {
+        throw new AccessTokenExpiredException();
+    }
 
     @GetMapping(value = "/invalid-token")
-    public CommonResult invalidToken(){throw new InvalidTokenException();}
+    public CommonResult invalidToken() {
+        throw new InvalidTokenException();
+    }
 
     @GetMapping(value = "/userLoginFailed")
-    public CommonResult answerAlreadyExists(){throw new UserLoginFailedException();}
+    public CommonResult answerAlreadyExists() {
+        throw new UserLoginFailedException();
+    }
 
     @GetMapping(value = "/userNicknameOverlap")
-    public CommonResult userNicknameOverlapException(){throw new UserNicknameOverlapException();}
+    public CommonResult userNicknameOverlapException() {
+        throw new UserNicknameOverlapException();
+    }
 
     @GetMapping(value = "/userEmailOverlap")
-    public CommonResult userEmailOverlapException(){throw new UserEmailOverlapException();}
+    public CommonResult userEmailOverlapException() {
+        throw new UserEmailOverlapException();
+    }
 
     @GetMapping(value = "/invalidAuthenticationNumber")
-    public CommonResult invalidAuthenticationNumberException(){throw new InvalidAuthenticationNumberException();}
+    public CommonResult invalidAuthenticationNumberException() {
+        throw new InvalidAuthenticationNumberException();
+    }
 
 }
 

@@ -21,7 +21,7 @@ public class UserDto {
 
     private String email;
 
-    public User toEntity(){
+    public User toEntity() {
         return User.builder()
                 .username(this.username)
                 .password(this.password)

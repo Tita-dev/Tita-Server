@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class MyUserDetailsService implements UserDetailsService {
+public class MyUserDetails implements UserDetailsService {
 
     final private UserRepository userRepository;
 

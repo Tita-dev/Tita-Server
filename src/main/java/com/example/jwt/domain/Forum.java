@@ -12,10 +12,11 @@ import javax.validation.constraints.Size;
 @Builder
 @AllArgsConstructor
 
-@Table(name ="forum")
-public class Forum extends BaseEntity{
+@Table(name = "forum")
+public class Forum extends BaseEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "forum_idx")
     private Long forumIdx;
 
@@ -24,10 +25,10 @@ public class Forum extends BaseEntity{
     private User user;
 
     @Size(min = 4, max = 16)
-    @Column(name = "forum_name",unique = true,nullable = false)
+    @Column(name = "forum_name", unique = true, nullable = false)
     private String forumName;
 
     @Size(max = 500)
-    @Column(name = "explanation",nullable = true)
+    @Column(name = "explanation", nullable = true)
     private String explanation;
 }

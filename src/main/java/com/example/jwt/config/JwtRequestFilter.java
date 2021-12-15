@@ -14,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -28,7 +29,7 @@ import java.io.IOException;
 
 public class JwtRequestFilter extends OncePerRequestFilter {
 
-    final private MyUserDetailsService userDetailsService;
+    final private MyUserDetails userDetailsService;
 
     final private JwtUtil jwtUtil;
 
@@ -44,11 +45,12 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         String username = null;
         String refreshusername = null;
 
-        try{
-            if(accessJwt != null){ // 가져온 토큰이 올바른 값이 왔는지 확인
+        try {
+            if (accessJwt != null && accessJwt.startsWith("Bearer ")) { // 가져온 토큰이 올바른 값이 왔는지 확인
+                accessJwt = accessJwt.split(" ")[1].trim();
                 username = jwtUtil.getUsername(accessJwt); //해당 토큰의 안에 있는 유저이름을 가져온다.
             }
-            if(username != null){ //유저 이름을 성공적으로 가져왔을 경우
+            if (username != null) { //유저 이름을 성공적으로 가져왔을 경우
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
                 try {
@@ -56,27 +58,28 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities()); //인증을 위한 값을 담음
                         usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(req)); //인증
                         SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken); // 인증 정보가 일치함으로 context 에 인증정보를 저장하고 통과, filter 외부의 컨트롤러에서도 인증정보를 참조하기에 저장해두어야 한다.
+
                     }
-                }catch (NullPointerException e){
+                } catch (NullPointerException e) {
                     throw new UserNotFoundException();
                 }
 
             }
-        }catch (ExpiredJwtException e){ //토큰이 만료되었을때
-            if(refreshJwt!=null){ //리프레쉬 토큰이 있을때
+        } catch (ExpiredJwtException e) { //토큰이 만료되었을때
+            if (refreshJwt != null) { //리프레쉬 토큰이 있을때
                 refreshusername = jwtUtil.getUsername(refreshJwt);
-                if (refreshJwt.equals(redisUtil.getData(refreshusername))){
+                if (refreshJwt.equals(redisUtil.getData(refreshusername))) {
                     String newJwt = jwtUtil.generateToken(refreshusername);
-                    res.addHeader("JwtToken",newJwt);
-                }else {
+                    res.addHeader("JwtToken", newJwt);
+                } else {
                     throw new AccessTokenExpiredException();
                 }
             }
-        }catch (MalformedJwtException e){
+        } catch (MalformedJwtException e) {
             throw new InvalidTokenException();
-        }catch (IllegalArgumentException e){
+        } catch (IllegalArgumentException e) {
         }
 
-        filterChain.doFilter(req,res); //필터 작동
+        filterChain.doFilter(req, res); //필터 작동
     }
 }

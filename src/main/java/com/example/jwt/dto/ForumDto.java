@@ -20,7 +20,7 @@ public class ForumDto {
     private String explanation;
 
 
-    public Forum toEntity(){
+    public Forum toEntity() {
         return Forum.builder()
                 .forumName(this.getForumName())
                 .explanation(this.getExplanation())

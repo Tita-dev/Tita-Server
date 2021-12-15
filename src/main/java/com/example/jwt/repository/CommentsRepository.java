@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-public interface CommentsRepository extends JpaRepository <Comments, Long> {
+public interface CommentsRepository extends JpaRepository<Comments, Long> {
     List<Comments> findAllByPost(Post post);
 
     @Transactional

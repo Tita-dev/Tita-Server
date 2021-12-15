@@ -22,25 +22,25 @@ public class ForumController {
     private final ForumService forumService;
 
     @GetMapping("/list")
-    public ListResult<String> forumList()throws Exception {
+    public ListResult<String> forumList() throws Exception {
         List<String> forumDtoList = forumService.getForumList();
         return responseService.getListResult(forumDtoList);
     }
 
     @PostMapping("/create")
-    public CommonResult forumCreate(@RequestBody ForumDto forumDto) throws Exception{
+    public CommonResult forumCreate(@RequestBody ForumDto forumDto) throws Exception {
         forumService.forumCreate(forumDto);
         return responseService.getSuccessResult();
     }
 
     @DeleteMapping("/delete")
-    public CommonResult forumDelete(@RequestBody ForumDto forumDto)throws Exception{
+    public CommonResult forumDelete(@RequestBody ForumDto forumDto) throws Exception {
         forumService.forumDelete(forumDto);
         return responseService.getSuccessResult();
     }
 
     @PutMapping("/put")
-    public CommonResult forumPut(@RequestBody ForumChangeDto forumChangeDto) throws Exception{
+    public CommonResult forumPut(@RequestBody ForumChangeDto forumChangeDto) throws Exception {
         forumService.forumPut(forumChangeDto);
         return responseService.getSuccessResult();
     }

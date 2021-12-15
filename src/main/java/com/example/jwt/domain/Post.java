@@ -17,7 +17,8 @@ import javax.validation.constraints.Size;
 @Table(name = "post")
 public class Post extends BaseEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_idx")
     private Long postIdx;
 

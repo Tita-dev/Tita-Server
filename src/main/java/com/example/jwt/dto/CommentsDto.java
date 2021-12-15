@@ -12,7 +12,7 @@ public class CommentsDto {
 
     private String commentsContent;
 
-    public Comments toEntity(){
+    public Comments toEntity() {
         return Comments.builder()
                 .commentsContent(this.getCommentsContent())
                 .build();
