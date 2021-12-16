@@ -29,7 +29,7 @@ public class AuthServiceMpl implements AuthService {
 
     @Override
     public User signUpUser(UserDto userDto) {
-        if (userRepository.findByUsername(userDto.getUsername()) != null) {
+        if (userRepository.existsByUsername(userDto.getUsername())) {
             throw new UserAlreadyExistsException();
         }
         if (userRepository.findByName(userDto.getName()) != null) {
