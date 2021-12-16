@@ -45,4 +45,10 @@ public class PostController {
         postService.postPut(forumName, postChangeDto);
         return responseService.getSuccessResult();
     }
+
+    @PostMapping("/{forumName}/like")
+    public CommonResult postLike(@PathVariable String forumName, @RequestBody PostDto postDto) throws Exception {
+        postService.postLike(forumName, postDto);
+        return responseService.getSuccessResult();
+    }
 }
