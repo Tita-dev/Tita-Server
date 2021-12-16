@@ -4,6 +4,7 @@ import com.example.jwt.domain.Post;
 import com.example.jwt.dto.PostChangeDto;
 import com.example.jwt.dto.PostDto;
 import com.example.jwt.repository.ForumRepository;
+import com.example.jwt.repository.PostLikeRepository;
 import com.example.jwt.repository.PostRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -30,6 +31,8 @@ class PostServiceTest {
     @Autowired
     private PostService postService;
 
+    @Autowired
+    private PostLikeRepository postLikeRepository;
     @Test
     void getForumPostList() throws Exception {
         //given
@@ -90,5 +93,21 @@ class PostServiceTest {
 
         //then
         assertEquals(postChangeDto.getNewPostName(), post.getPostName());
+    }
+
+    @Test
+    void postLike() throws Exception{
+        //given
+        PostDto postDto = PostDto.builder()
+                .postName("민경모는 에밀리아")
+                .content("를 좋아하냐????")
+                .build();
+
+        //when
+        postService.postCreate("민경모모모", postDto);
+        postService.postLike("민경모모모", postDto);
+
+
+        assertEquals(true,postLikeRepository.findAllByPost(postRepository.findByPostNameAndForum(postDto.getPostName(), forumRepository.findByForumName("민경모모모"))));
     }
 }
