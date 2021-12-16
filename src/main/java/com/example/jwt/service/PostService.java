@@ -1,6 +1,7 @@
 package com.example.jwt.service;
 
 import com.example.jwt.domain.Post;
+import com.example.jwt.domain.PostLike;
 import com.example.jwt.dto.PostChangeDto;
 import com.example.jwt.dto.PostDto;
 
@@ -15,4 +16,6 @@ public interface PostService {
     void postDelete(String forumName, PostDto postDto) throws Exception;
 
     Post postPut(String forumName, PostChangeDto postChangeDto) throws Exception;
+
+    PostLike postLike(String forumName, PostDto postDto) throws Exception;
 }
