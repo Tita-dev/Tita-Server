@@ -1,9 +1,11 @@
 package com.example.jwt.service;
 
 import com.example.jwt.domain.Comments;
+import com.example.jwt.domain.CommentsLike;
 import com.example.jwt.domain.Forum;
 import com.example.jwt.domain.Post;
 import com.example.jwt.dto.CommentsDto;
+import com.example.jwt.repository.CommentsLikeRepository;
 import com.example.jwt.repository.CommentsRepository;
 import com.example.jwt.repository.ForumRepository;
 import com.example.jwt.repository.PostRepository;
@@ -24,6 +26,7 @@ public class CommentsServiceMpl implements CommentsService {
     private final PostRepository postRepository;
     private final CommentsRepository commentsRepository;
     private final CurrentUserUtil currentUserUtil;
+    private final CommentsLikeRepository commentsLikeRepository;
 
 
     @Override
@@ -61,5 +64,15 @@ public class CommentsServiceMpl implements CommentsService {
     public void commentsDelete(Long postIdx, CommentsDto commentsDto) throws Exception {
         Post post = postRepository.findByPostIdx(postIdx);
         commentsRepository.deleteCommentsByCommentsContentAndPost(commentsDto.getCommentsContent(), post);
+    }
+
+    @Override
+    public CommentsLike commentsLike(Long postIdx, CommentsDto commentsDto) throws Exception {
+        Post post = postRepository.findByPostIdx(postIdx);
+        CommentsLike commentsLike = CommentsLike.builder()
+                .user(currentUserUtil.getCurrentUser())
+                .comments(commentsRepository.findByCommentsContentAndPost(commentsDto.getCommentsContent(),post))
+                .build();
+        return commentsLikeRepository.save(commentsLike);
     }
 }
