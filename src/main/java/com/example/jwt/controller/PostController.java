@@ -24,8 +24,7 @@ public class PostController {
 
     @GetMapping("/{forumName}/list")
     public SingleResult<List<Map<String, String>>> postList(@PathVariable String forumName) throws Exception {
-        List<Map<String, String>> postListDto = postService.getForumPostList(forumName);
-        return responseService.getSingleResult(postListDto);
+        return responseService.getSingleResult(postService.getForumPostList(forumName));
     }
 
     @PostMapping("/{forumName}/create")
