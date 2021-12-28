@@ -35,14 +35,12 @@ public class PostServiceMpl implements PostService {
         List<Map<String, String>> postList = new ArrayList<>();
 
         for (Post post : posts) {
-            PostDto postDto = PostDto.builder()
-                    .postName(post.getPostName())
-                    .content(post.getContent())
-                    .build();
-
             Map<String, String> map = new HashMap<>();
-            map.put("PostName", postDto.getPostName());
-            map.put("Content", postDto.getContent());
+            map.put("PostIdx", Long.toString(post.getPostIdx()));
+            map.put("PostName", post.getPostName());
+            map.put("Content", post.getContent());
+            map.put("PostLike",Long.toString(postLikeRepository.countPostLikeByPost(post)));
+            map.put("CommentsCount",Long.toString(commentsRepository.countCommentsByPost(post)));
             postList.add(map);
         }
         return postList;
