@@ -3,6 +3,7 @@ package com.example.jwt.repository;
 import com.example.jwt.domain.Forum;
 import com.example.jwt.domain.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -19,5 +20,4 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     Post findByPostNameAndForum(String postName, Forum forum);
 
     Post findByPostIdx(Long postIdx);
-
 }
