@@ -1,17 +1,16 @@
 package com.example.jwt.service;
 
-import com.example.jwt.domain.Comments;
-import com.example.jwt.domain.Post;
-import com.example.jwt.dto.CommentsDto;
-import com.example.jwt.repository.CommentsRepository;
-import com.example.jwt.repository.PostRepository;
+import com.example.jwt.model.comments.Comments;
+import com.example.jwt.model.comments.service.CommentsService;
+import com.example.jwt.model.post.Post;
+import com.example.jwt.model.comments.dto.CommentsDto;
+import com.example.jwt.model.comments.repository.CommentsRepository;
+import com.example.jwt.model.post.repository.PostRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
