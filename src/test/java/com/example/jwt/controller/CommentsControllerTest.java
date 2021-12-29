@@ -34,15 +34,15 @@ class CommentsControllerTest {
     private MockMvc mvc;
 
     @BeforeEach
-    public void Before(@Autowired CommentsController commentsController){
+    public void Before(@Autowired CommentsController commentsController) {
         mvc = MockMvcBuilders.standaloneSetup(commentsController).build();
     }
 
     @Test
     @DisplayName("게시글 내용과 적힌 댓글 불러오기")
-    void getPostAndComments() throws Exception{
+    void getPostAndComments() throws Exception {
 
-        final ResultActions resultActions = mvc.perform(get("/tita/forum/{forumName}/{postIdx}","민경모씹떢",1)
+        final ResultActions resultActions = mvc.perform(get("/tita/forum/{forumName}/{postIdx}", "민경모씹떢", 1)
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8"));
 
@@ -60,7 +60,7 @@ class CommentsControllerTest {
 
         String content = objectMapper.writeValueAsString(commentsDto);
 
-        final ResultActions resultActions = mvc.perform(post("/tita/forum/{forumName}/{postIdx}/create","민경모씹떢","1")
+        final ResultActions resultActions = mvc.perform(post("/tita/forum/{forumName}/{postIdx}/create", "민경모씹떢", "1")
                 .content(content)
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8"));
@@ -79,7 +79,7 @@ class CommentsControllerTest {
 
         String content = objectMapper.writeValueAsString(commentsDto);
 
-        final ResultActions resultActions = mvc.perform(delete("/tita/forum/{forumName}/{postIdx}/delete","민경모씹떢","1")
+        final ResultActions resultActions = mvc.perform(delete("/tita/forum/{forumName}/{postIdx}/delete", "민경모씹떢", "1")
                 .content(content)
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8"));

@@ -30,9 +30,9 @@ class CommentsServiceTest {
     private CommentsService commentsService;
 
     @Test
-    void getPostAndComments() throws Exception{
+    void getPostAndComments() throws Exception {
         //given
-        Map<String,String> map;
+        Map<String, String> map;
 
         Long ad = Long.valueOf(1);
 
@@ -47,7 +47,7 @@ class CommentsServiceTest {
     }
 
     @Test
-    void commentsCreate() throws Exception{
+    void commentsCreate() throws Exception {
         //given
         CommentsDto commentsDto = CommentsDto.builder()
                 .commentsContent("민경모 개씹덕이네 ㄹㅇzㅋㅋㅋ")
@@ -57,14 +57,14 @@ class CommentsServiceTest {
         Long postIdx = Long.valueOf(2);
 
         //when
-        Comments comments = commentsService.commentsCreate(forumName,postIdx,commentsDto);
+        Comments comments = commentsService.commentsCreate(forumName, postIdx, commentsDto);
 
         //then
-        assertEquals(commentsDto.getCommentsContent(),comments.getCommentsContent());
+        assertEquals(commentsDto.getCommentsContent(), comments.getCommentsContent());
     }
 
     @Test
-    void commentsDelete() throws Exception{
+    void commentsDelete() throws Exception {
 
         //given
         CommentsDto commentsDto = CommentsDto.builder()
@@ -75,9 +75,9 @@ class CommentsServiceTest {
         Post post = postRepository.findByPostIdx(ad);
 
         //when
-        commentsService.commentsDelete(ad,commentsDto);
+        commentsService.commentsDelete(ad, commentsDto);
 
         //then
-        assertEquals(null,commentsRepository.findByCommentsContentAndPost(commentsDto.getCommentsContent(),post));
+        assertEquals(null, commentsRepository.findByCommentsContentAndPost(commentsDto.getCommentsContent(), post));
     }
 }

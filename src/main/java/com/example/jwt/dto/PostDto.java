@@ -20,7 +20,7 @@ public class PostDto {
     @Size(max = 500, min = 0)
     private String content;
 
-    public Post toEntity(){
+    public Post toEntity() {
         return Post.builder()
                 .postName(this.getPostName())
                 .content(this.getContent())

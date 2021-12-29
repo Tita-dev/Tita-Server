@@ -4,6 +4,7 @@ import com.example.jwt.domain.Post;
 import com.example.jwt.dto.PostChangeDto;
 import com.example.jwt.dto.PostDto;
 import com.example.jwt.repository.ForumRepository;
+import com.example.jwt.repository.PostLikeRepository;
 import com.example.jwt.repository.PostRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -30,50 +31,53 @@ class PostServiceTest {
     @Autowired
     private PostService postService;
 
+    @Autowired
+    private PostLikeRepository postLikeRepository;
     @Test
     void getForumPostList() throws Exception {
         //given
-        List<Map<String,String>> mapp;
+        List<Map<String, String>> mapp;
 
         //when
         mapp = postService.getForumPostList("민경모씹떢");
 
         //then
-        for(Map<String, String> map : mapp) {
+        for (Map<String, String> map : mapp) {
             for (Map.Entry<String, String> entry : map.entrySet()) {
                 String key = entry.getKey();
                 Object value = entry.getValue();
                 System.out.println("key: " + key + " | value: " + value);
             }
-        };
+        }
+        ;
     }
 
     @Test
-    void postCreate() throws Exception{
+    void postCreate() throws Exception {
         //given
         PostDto postDto = PostDto.builder()
                 .postName("민경모는 에밀리아")
                 .content("를 좋아하냐????")
                 .build();
         //when
-        Post post = postService.postCreate("민경모모모",postDto);
+        Post post = postService.postCreate("민경모모모", postDto);
 
         //then
-        assertEquals(postDto.getPostName(),post.getPostName());
+        assertEquals(postDto.getPostName(), post.getPostName());
     }
 
     @Test
-    void postDelete() throws Exception{
+    void postDelete() throws Exception {
         //given
         PostDto postDto = PostDto.builder()
                 .postName("민경모는 에밀리아")
                 .content("를 좋아하냐????")
                 .build();
         //when
-        postService.postDelete("민경모모모",postDto);
+        postService.postDelete("민경모모모", postDto);
 
         //then
-        assertEquals(null,postRepository.findByPostNameAndForum(postDto.getPostName(),forumRepository.findByForumName("민경모모모")));
+        assertEquals(null, postRepository.findByPostNameAndForum(postDto.getPostName(), forumRepository.findByForumName("민경모모모")));
     }
 
     @Test
@@ -85,9 +89,25 @@ class PostServiceTest {
         postChangeDto.setNewContent("를 좋아하냐????");
 
         //when
-        Post post = postService.postPut("민경모모모",postChangeDto);
+        Post post = postService.postPut("민경모모모", postChangeDto);
 
         //then
-        assertEquals(postChangeDto.getNewPostName(),post.getPostName());
+        assertEquals(postChangeDto.getNewPostName(), post.getPostName());
+    }
+
+    @Test
+    void postLike() throws Exception{
+        //given
+        PostDto postDto = PostDto.builder()
+                .postName("민경모는 에밀리아")
+                .content("를 좋아하냐????")
+                .build();
+
+        //when
+        postService.postCreate("민경모모모", postDto);
+        postService.postLike("민경모모모", postDto);
+
+
+        assertEquals(true,postLikeRepository.findAllByPost(postRepository.findByPostNameAndForum(postDto.getPostName(), forumRepository.findByForumName("민경모모모"))));
     }
 }

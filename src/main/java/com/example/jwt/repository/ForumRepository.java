@@ -10,8 +10,10 @@ import java.util.List;
 
 public interface ForumRepository extends JpaRepository<Forum, Long> {
     Forum findByForumName(String forumName);
+
     @Transactional
-    void deleteByForumName (String forumName);
+    void deleteByForumName(String forumName);
+
     boolean existsByForumName(String forumName);
 
 }

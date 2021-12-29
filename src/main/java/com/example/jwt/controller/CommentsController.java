@@ -22,20 +22,26 @@ public class CommentsController {
     private final CommentsService commentsService;
 
     @GetMapping("/{forumName}/{postIdx}")
-    public SingleResult<List<Map<String,String>>> getPostAndComments (@PathVariable Long postIdx) throws Exception{
-        List<Map<String,String>> postAndCommentsDto = commentsService.getPostAndComments(postIdx);
+    public SingleResult<List<Map<String, String>>> getPostAndComments(@PathVariable Long postIdx) throws Exception {
+        List<Map<String, String>> postAndCommentsDto = commentsService.getPostAndComments(postIdx);
         return responseService.getSingleResult(postAndCommentsDto);
     }
 
     @PostMapping("/{forumName}/{postIdx}/create")
-    public CommonResult commentsCreate (@PathVariable String forumName,@PathVariable Long postIdx ,@RequestBody CommentsDto commentsDto) throws Exception{
-        commentsService.commentsCreate(forumName,postIdx,commentsDto);
+    public CommonResult commentsCreate(@PathVariable String forumName, @PathVariable Long postIdx, @RequestBody CommentsDto commentsDto) throws Exception {
+        commentsService.commentsCreate(forumName, postIdx, commentsDto);
         return responseService.getSuccessResult();
     }
 
     @DeleteMapping("/{forumName}/{postIdx}/delete")
-    public CommonResult postDelete (@PathVariable(name = "postIdx") Long postIdx ,@RequestBody CommentsDto commentsDto)throws Exception{
-        commentsService.commentsDelete(postIdx,commentsDto);
+    public CommonResult postDelete(@PathVariable(name = "postIdx") Long postIdx, @RequestBody CommentsDto commentsDto) throws Exception {
+        commentsService.commentsDelete(postIdx, commentsDto);
+        return responseService.getSuccessResult();
+    }
+
+    @PostMapping("/{forumName}/{postIdx}/like")
+    public CommonResult postLike(@PathVariable(name = "postIdx") Long postIdx, @RequestBody CommentsDto commentsDto) throws Exception {
+        commentsService.commentsLike(postIdx, commentsDto);
         return responseService.getSuccessResult();
     }
 }

@@ -39,7 +39,7 @@ class PostControllerTest {
     private MockMvc mvc;
 
     @BeforeEach
-    public void Before(@Autowired PostController postController){
+    public void Before(@Autowired PostController postController) {
         mvc = MockMvcBuilders.standaloneSetup(postController).build();
     }
 
@@ -57,7 +57,7 @@ class PostControllerTest {
 
     @Test
     @DisplayName("특정 게시판에 게시글 쓰기")
-    void postCreate() throws Exception{
+    void postCreate() throws Exception {
         //given
         PostDto postDto = PostDto.builder()
                 .postName("으악")
@@ -66,7 +66,7 @@ class PostControllerTest {
 
         String content = objectMapper.writeValueAsString(postDto);
 
-        final ResultActions resultActions = mvc.perform(post("/tita/forum/{forumName}/create","민경모씹떢")
+        final ResultActions resultActions = mvc.perform(post("/tita/forum/{forumName}/create", "민경모씹떢")
                 .content(content)
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8"));
@@ -78,7 +78,7 @@ class PostControllerTest {
 
     @Test
     @DisplayName("특정 게시판의 게시글 지우기")
-    void postDelete() throws Exception{
+    void postDelete() throws Exception {
         //given
         PostDto postDto = PostDto.builder()
                 .postName("민경모 에밀리아")
@@ -99,7 +99,7 @@ class PostControllerTest {
 
     @Test
     @DisplayName("특정 게시판의 게시글 수정")
-    void postPut() throws Exception{
+    void postPut() throws Exception {
         //given
         PostChangeDto postChangeDto = new PostChangeDto();
         postChangeDto.setPostName("민경모는 에밀리아");

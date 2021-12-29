@@ -23,26 +23,31 @@ public class PostController {
     private final PostService postService;
 
     @GetMapping("/{forumName}/list")
-    public SingleResult<List<Map<String,String>>> postList(@PathVariable String forumName)throws Exception{
-        List<Map<String,String>> postListDto = postService.getForumPostList(forumName);
-        return responseService.getSingleResult(postListDto);
+    public SingleResult<List<Map<String, String>>> postList(@PathVariable String forumName) throws Exception {
+        return responseService.getSingleResult(postService.getForumPostList(forumName));
     }
 
     @PostMapping("/{forumName}/create")
-    public CommonResult postCreate(@PathVariable String forumName, @RequestBody PostDto postDto) throws Exception{
-        postService.postCreate(forumName,postDto);
+    public CommonResult postCreate(@PathVariable String forumName, @RequestBody PostDto postDto) throws Exception {
+        postService.postCreate(forumName, postDto);
         return responseService.getSuccessResult();
     }
 
     @DeleteMapping("/{forumName}/delete")
-    public CommonResult postDelete(@PathVariable String forumName, @RequestBody PostDto postDto)throws Exception{
-        postService.postDelete(forumName,postDto);
+    public CommonResult postDelete(@PathVariable String forumName, @RequestBody PostDto postDto) throws Exception {
+        postService.postDelete(forumName, postDto);
         return responseService.getSuccessResult();
     }
 
     @PutMapping("/{forumName}/put")
-    public CommonResult postPut (@PathVariable String forumName, @RequestBody PostChangeDto postChangeDto)throws Exception{
-        postService.postPut(forumName,postChangeDto);
+    public CommonResult postPut(@PathVariable String forumName, @RequestBody PostChangeDto postChangeDto) throws Exception {
+        postService.postPut(forumName, postChangeDto);
+        return responseService.getSuccessResult();
+    }
+
+    @PostMapping("/{forumName}/like")
+    public CommonResult postLike(@PathVariable String forumName, @RequestBody PostDto postDto) throws Exception {
+        postService.postLike(forumName, postDto);
         return responseService.getSuccessResult();
     }
 }

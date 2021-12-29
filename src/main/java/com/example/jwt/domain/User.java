@@ -20,10 +20,11 @@ import java.util.Date;
 @Entity
 @Builder
 
-@Table(name ="user")
-public class User extends BaseEntity implements UserDetails{
+@Table(name = "user")
+public class User extends BaseEntity implements UserDetails {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_idx")
     private Long userIdx;
 
@@ -42,7 +43,7 @@ public class User extends BaseEntity implements UserDetails{
     private String school;
 
     @Email
-    @Column(name = "email",unique = true, nullable = false)
+    @Column(name = "email", unique = true, nullable = false)
     private String email;
 
 
@@ -55,6 +56,7 @@ public class User extends BaseEntity implements UserDetails{
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
     }
+
     @Override
     public String getPassword() {
         return this.password;

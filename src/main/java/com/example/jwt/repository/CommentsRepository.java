@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-public interface CommentsRepository extends JpaRepository <Comments, Long> {
+public interface CommentsRepository extends JpaRepository<Comments, Long> {
     List<Comments> findAllByPost(Post post);
 
     @Transactional
@@ -21,4 +21,6 @@ public interface CommentsRepository extends JpaRepository <Comments, Long> {
     void deleteCommentsByForum(Forum forum);
 
     Comments findByCommentsContentAndPost(String commentsContent, Post post);
+
+    Long countCommentsByPost(Post post);
 }
