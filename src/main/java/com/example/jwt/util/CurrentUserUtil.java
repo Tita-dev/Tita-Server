@@ -1,5 +1,6 @@
 package com.example.jwt.util;
 
+import com.example.jwt.advice.exception.UserNotFoundException;
 import com.example.jwt.domain.User;
 import com.example.jwt.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,6 @@ public class CurrentUserUtil {
     }
 
     public User getCurrentUser(){
-        return userRepository.findByUsername(CurrentUserUtil.getCurrentUsername());
+        return userRepository.findByUsername(CurrentUserUtil.getCurrentUsername()).orElseThrow(()-> new UserNotFoundException());
     }
 }

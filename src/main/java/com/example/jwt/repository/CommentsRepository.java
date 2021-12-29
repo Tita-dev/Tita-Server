@@ -21,4 +21,6 @@ public interface CommentsRepository extends JpaRepository<Comments, Long> {
     void deleteCommentsByForum(Forum forum);
 
     Comments findByCommentsContentAndPost(String commentsContent, Post post);
+
+    Long countCommentsByPost(Post post);
 }

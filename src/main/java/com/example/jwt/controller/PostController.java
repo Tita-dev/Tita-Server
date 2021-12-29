@@ -24,8 +24,7 @@ public class PostController {
 
     @GetMapping("/{forumName}/list")
     public SingleResult<List<Map<String, String>>> postList(@PathVariable String forumName) throws Exception {
-        List<Map<String, String>> postListDto = postService.getForumPostList(forumName);
-        return responseService.getSingleResult(postListDto);
+        return responseService.getSingleResult(postService.getForumPostList(forumName));
     }
 
     @PostMapping("/{forumName}/create")
@@ -43,6 +42,12 @@ public class PostController {
     @PutMapping("/{forumName}/put")
     public CommonResult postPut(@PathVariable String forumName, @RequestBody PostChangeDto postChangeDto) throws Exception {
         postService.postPut(forumName, postChangeDto);
+        return responseService.getSuccessResult();
+    }
+
+    @PostMapping("/{forumName}/like")
+    public CommonResult postLike(@PathVariable String forumName, @RequestBody PostDto postDto) throws Exception {
+        postService.postLike(forumName, postDto);
         return responseService.getSuccessResult();
     }
 }

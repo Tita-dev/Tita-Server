@@ -1,6 +1,7 @@
 package com.example.jwt.service;
 
 import com.example.jwt.domain.Comments;
+import com.example.jwt.domain.CommentsLike;
 import com.example.jwt.dto.CommentsDto;
 
 import java.util.List;
@@ -13,4 +14,6 @@ public interface CommentsService {
     Comments commentsCreate(String forumName, Long postIdx, CommentsDto commentsDto) throws Exception;
 
     void commentsDelete(Long postIdx, CommentsDto commentsDto) throws Exception;
+
+    CommentsLike commentsLike(Long postIdx, CommentsDto commentsDto) throws Exception;
 }

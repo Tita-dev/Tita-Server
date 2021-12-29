@@ -38,4 +38,10 @@ public class CommentsController {
         commentsService.commentsDelete(postIdx, commentsDto);
         return responseService.getSuccessResult();
     }
+
+    @PostMapping("/{forumName}/{postIdx}/like")
+    public CommonResult postLike(@PathVariable(name = "postIdx") Long postIdx, @RequestBody CommentsDto commentsDto) throws Exception {
+        commentsService.commentsLike(postIdx, commentsDto);
+        return responseService.getSuccessResult();
+    }
 }

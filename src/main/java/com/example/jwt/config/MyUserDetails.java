@@ -1,5 +1,6 @@
 package com.example.jwt.config;
 
+import com.example.jwt.advice.exception.UserNotFoundException;
 import com.example.jwt.domain.User;
 import com.example.jwt.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +17,7 @@ public class MyUserDetails implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
+        User user = userRepository.findByUsername(username).orElseThrow(()-> new UserNotFoundException());
         return user;
     }
 }

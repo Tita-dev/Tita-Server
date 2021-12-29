@@ -35,11 +35,7 @@ public class ForumServiceMpl implements ForumService {
         List<String> forumList = new ArrayList<>();
 
         for (Forum forum : forums) {
-            ForumDto forumDto = ForumDto.builder()
-                    .forumName(forum.getForumName())
-                    .explanation(forum.getExplanation())
-                    .build();
-            forumList.add(forumDto.getForumName());
+            forumList.add(forum.getForumName());
         }
         return forumList;
     }

@@ -1,12 +1,11 @@
 package com.example.jwt.service;
 
 import com.example.jwt.domain.Comments;
+import com.example.jwt.domain.CommentsLike;
 import com.example.jwt.domain.Forum;
 import com.example.jwt.domain.Post;
 import com.example.jwt.dto.CommentsDto;
-import com.example.jwt.repository.CommentsRepository;
-import com.example.jwt.repository.ForumRepository;
-import com.example.jwt.repository.PostRepository;
+import com.example.jwt.repository.*;
 import com.example.jwt.util.CurrentUserUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,23 +23,21 @@ public class CommentsServiceMpl implements CommentsService {
     private final PostRepository postRepository;
     private final CommentsRepository commentsRepository;
     private final CurrentUserUtil currentUserUtil;
-
+    private final CommentsLikeRepository commentsLikeRepository;
+    private final PostLikeRepository postLikeRepository;
 
     @Override
     public List<Map<String, String>> getPostAndComments(Long postIdx) throws Exception {
         Post post = postRepository.findByPostIdx(postIdx);
+        System.out.println(postLikeRepository.countPostLikeByPost(post));
         List<Comments> commentsList = commentsRepository.findAllByPost(post);
         List<Map<String, String>> commetsMapList = new ArrayList<>();
         Map<String, String> postMap = new HashMap<>();
         Map<String, String> commentsMap = new HashMap<>();
         postMap.put("Content", post.getContent());
         postMap.put("PostName", post.getPostName());
-        commetsMapList.add(postMap);
         for (Comments comments : commentsList) {
-            CommentsDto commentsDto = CommentsDto.builder()
-                    .commentsContent(comments.getCommentsContent())
-                    .build();
-            commentsMap.put("Comments", commentsDto.getCommentsContent());
+            commentsMap.put("Comments", comments.getCommentsContent());
             commetsMapList.add(commentsMap);
         }
         return commetsMapList;
@@ -61,5 +58,15 @@ public class CommentsServiceMpl implements CommentsService {
     public void commentsDelete(Long postIdx, CommentsDto commentsDto) throws Exception {
         Post post = postRepository.findByPostIdx(postIdx);
         commentsRepository.deleteCommentsByCommentsContentAndPost(commentsDto.getCommentsContent(), post);
+    }
+
+    @Override
+    public CommentsLike commentsLike(Long postIdx, CommentsDto commentsDto) throws Exception {
+        Post post = postRepository.findByPostIdx(postIdx);
+        CommentsLike commentsLike = CommentsLike.builder()
+                .user(currentUserUtil.getCurrentUser())
+                .comments(commentsRepository.findByCommentsContentAndPost(commentsDto.getCommentsContent(),post))
+                .build();
+        return commentsLikeRepository.save(commentsLike);
     }
 }
