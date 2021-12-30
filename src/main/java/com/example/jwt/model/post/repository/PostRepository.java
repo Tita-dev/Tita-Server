@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-public interface PostRepository extends JpaRepository<Post, Long> {
+public interface PostRepository extends JpaRepository<Post, Long>, PostCustomRepository{
     List<Post> findAllByForum(Forum forum);
 
     @Transactional
@@ -19,4 +19,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     Post findByPostNameAndForum(String postName, Forum forum);
 
     Post findByPostIdx(Long postIdx);
+
+    List<Post> findTop5ByOrderByPostLikeList();
+
 }
