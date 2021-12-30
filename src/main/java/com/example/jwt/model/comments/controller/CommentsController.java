@@ -32,13 +32,13 @@ public class CommentsController {
     }
 
     @DeleteMapping("/{forumName}/{postIdx}/delete")
-    public CommonResult postDelete(@PathVariable(name = "postIdx") Long postIdx, @RequestBody CommentsDto commentsDto) throws Exception {
+    public CommonResult commentsDelete(@PathVariable(name = "postIdx") Long postIdx, @RequestBody CommentsDto commentsDto) throws Exception {
         commentsService.commentsDelete(postIdx, commentsDto);
         return responseService.getSuccessResult();
     }
 
     @PostMapping("/{forumName}/{postIdx}/like")
-    public CommonResult postLike(@PathVariable(name = "postIdx") Long postIdx, @RequestBody CommentsDto commentsDto) throws Exception {
+    public CommonResult commentsLike(@PathVariable(name = "postIdx") Long postIdx, @RequestBody CommentsDto commentsDto) throws Exception {
         commentsService.commentsLike(postIdx, commentsDto);
         return responseService.getSuccessResult();
     }
