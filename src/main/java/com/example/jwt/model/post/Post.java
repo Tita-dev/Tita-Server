@@ -2,11 +2,14 @@ package com.example.jwt.model.post;
 
 import com.example.jwt.model.base_time.BaseEntity;
 import com.example.jwt.model.forum.Forum;
+import com.example.jwt.model.post.like.PostLike;
 import com.example.jwt.model.user.User;
 import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -37,4 +40,7 @@ public class Post extends BaseEntity {
     @Size(min = 0, max = 500)
     @Column(name = "content", nullable = false)
     private String content;
+
+    @OneToMany(mappedBy = "postLikeIdx")
+    private List<PostLike> postLikeList = new ArrayList<PostLike>();
 }
