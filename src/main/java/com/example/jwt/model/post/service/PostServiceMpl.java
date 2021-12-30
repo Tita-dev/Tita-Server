@@ -34,6 +34,7 @@ public class PostServiceMpl implements PostService {
         List<Post> posts = postRepository.findAllByForum(forum);
         List<Map<String, String>> postList = new ArrayList<>();
 
+
         for (Post post : posts) {
             Map<String, String> map = new HashMap<>();
             map.put("PostIdx", Long.toString(post.getPostIdx()));
@@ -43,6 +44,8 @@ public class PostServiceMpl implements PostService {
             map.put("CommentsCount",Long.toString(commentsRepository.countCommentsByPost(post)));
             postList.add(map);
         }
+        System.out.println("asdasd");
+        System.out.println(postRepository.findPostPostLikeOrder());
         return postList;
     }
 
