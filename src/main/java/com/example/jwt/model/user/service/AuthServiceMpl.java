@@ -23,11 +23,11 @@ public class AuthServiceMpl implements UserService {
 
     private final UserRepository userRepository;
     private final RedisUtil redisUtil;
-    private final EmailService emailService;
     private final KeyUtil keyUtil;
     private final JwtUtil jwtUtil;
     private final PasswordEncoder passwordEncoder;
     private final CurrentUserUtil currentUserUtil;
+    private final EmailService emailService;
 
     @Override
     public User signUpUser(UserDto userDto) {
@@ -67,10 +67,9 @@ public class AuthServiceMpl implements UserService {
     @Override
     public void sendVerificationMail(User user) throws UserNotFoundException {
         if (user == null) throw new UserNotFoundException();
-        String authkey = keyUtil.getKey(6);
-        redisUtil.setDataExpire(authkey, user.getUsername(), 60 * 30L);
-        emailService.sendMail(user.getEmail(), "[Tita] 회원가입 인증 이메일 입니다.", "인증번호는 " + authkey);
-
+        String authKey = keyUtil.getKey(6);
+        redisUtil.setDataExpire(authKey, user.getUsername(), 60 * 30L);
+        emailService.send(user.getEmail(), "[Tita] 회원가입 인증 이메일 입니다.", "인증번호는 " + authKey);
     }
 
     @Override
@@ -98,7 +97,7 @@ public class AuthServiceMpl implements UserService {
         String authKey = keyUtil.getKey(6);
         if (user == null) throw new UserNotFoundException();
         redisUtil.setDataExpire(authKey, user.getUsername(), 60 * 30L);
-        emailService.sendMail(user.getEmail(), "[Tita] 사용자 비밀번호 변경 메일입니다.", "인증번호는 " + authKey);
+        emailService.send(user.getEmail(), "[Tita] 사용자 비밀번호 변경 메일입니다.", "인증번호는 " + authKey);
     }
 
     @Override
@@ -122,7 +121,7 @@ public class AuthServiceMpl implements UserService {
         if (user == null) throw new UserNotFoundException();
         String authKey = keyUtil.getKey(6);
         redisUtil.setDataExpire(authKey, user.getUsername(), 60 * 30L);
-        emailService.sendMail(user.getEmail(), "[Tita] 사용자 아이디 확인 메일입니다.", "인증번호는 " + authKey);
+        emailService.send(user.getEmail(), "[Tita] 사용자 아이디 확인 메일입니다.", "인증번호는 " + authKey);
     }
 
     @Override
