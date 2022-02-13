@@ -48,4 +48,9 @@ public class PostController {
         postService.postLike(forumName, postDto);
         return responseService.getSuccessResult();
     }
+
+    @GetMapping("/best")
+    public SingleResult<List<Map<String, String>>> bestPost() throws Exception {
+        return responseService.getSingleResult(postService.getBestPost());
+    }
 }
