@@ -61,17 +61,21 @@ public class PostServiceMpl implements PostService {
     public void postDelete(String forumName, PostDto postDto) throws Exception {
         Forum forum = forumRepository.findByForumName(forumName);
         Post post = postRepository.findByPostNameAndForum(postDto.getPostName(), forum);
-        commentsRepository.deleteCommentsByPost(post);
-        postRepository.deletePostByPostNameAndForum(postDto.getPostName(), forum);
+        if (post.getUser().getUserIdx() == currentUserUtil.getCurrentUser().getUserIdx())
+            postRepository.deletePostByPostNameAndForum(postDto.getPostName(), forum);
+        else throw new Exception();
     }
 
     @Override
     public Post postPut(String forumName, PostChangeDto postChangeDto) throws Exception {
         Forum forum = forumRepository.findByForumName(forumName);
         Post post = postRepository.findByPostNameAndForum(postChangeDto.getPostName(), forum);
-        post.setPostName(postChangeDto.getNewPostName());
-        post.setContent(postChangeDto.getNewContent());
-        return postRepository.save(post);
+        if (post.getUser().getUserIdx() == currentUserUtil.getCurrentUser().getUserIdx()) {
+            post.setPostName(postChangeDto.getNewPostName());
+            post.setContent(postChangeDto.getNewContent());
+            return postRepository.save(post);
+        }
+        else throw new Exception();
     }
 
     @Override
