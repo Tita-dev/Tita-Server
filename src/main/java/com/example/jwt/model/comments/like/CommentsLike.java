@@ -4,6 +4,8 @@ import com.example.jwt.model.base_time.BaseEntity;
 import com.example.jwt.model.comments.Comments;
 import com.example.jwt.model.user.User;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
@@ -21,11 +23,13 @@ public class CommentsLike extends BaseEntity {
     @Column(name = "commentsLike_id")
     private Long commentsLikeIdx;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userIdx")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "commentsIdx")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Comments comments;
 }
