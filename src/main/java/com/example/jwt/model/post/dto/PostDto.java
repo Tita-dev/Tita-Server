@@ -1,6 +1,7 @@
 package com.example.jwt.model.post.dto;
 
 import com.example.jwt.model.post.Post;
+import com.querydsl.core.annotations.QueryProjection;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
