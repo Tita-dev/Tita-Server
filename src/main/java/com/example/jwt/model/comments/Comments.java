@@ -5,6 +5,8 @@ import com.example.jwt.model.post.Post;
 import com.example.jwt.model.user.User;
 import com.example.jwt.model.base_time.BaseEntity;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
@@ -23,14 +25,17 @@ public class Comments extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "forumIdx")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Forum forum;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "postIdx")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Post post;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userIdx")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
     @Column(name = "comments_content", nullable = false)
