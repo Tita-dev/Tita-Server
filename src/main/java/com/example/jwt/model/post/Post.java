@@ -5,6 +5,8 @@ import com.example.jwt.model.forum.Forum;
 import com.example.jwt.model.post.like.PostLike;
 import com.example.jwt.model.user.User;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -27,10 +29,12 @@ public class Post extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "forumIdx")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Forum forum;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userIdx")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
     @Size(max = 100)
@@ -41,6 +45,6 @@ public class Post extends BaseEntity {
     @Column(name = "content", nullable = false)
     private String content;
 
-    @OneToMany(mappedBy = "postLikeIdx")
+    @OneToMany(mappedBy = "postLikeIdx", cascade = {CascadeType.ALL})
     private List<PostLike> postLikeList = new ArrayList<PostLike>();
 }
