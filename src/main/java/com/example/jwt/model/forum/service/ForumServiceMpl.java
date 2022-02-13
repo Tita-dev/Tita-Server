@@ -5,6 +5,7 @@ import com.example.jwt.model.forum.dto.ForumDto;
 import com.example.jwt.model.forum.Forum;
 import com.example.jwt.model.comments.repository.CommentsRepository;
 import com.example.jwt.model.forum.repository.ForumRepository;
+import com.example.jwt.model.post.like.repository.PostLikeRepository;
 import com.example.jwt.model.post.repository.PostRepository;
 import com.example.jwt.util.CurrentUserUtil;
 import lombok.RequiredArgsConstructor;
@@ -19,8 +20,6 @@ import java.util.List;
 public class ForumServiceMpl implements ForumService {
 
     private final ForumRepository forumRepository;
-    private final PostRepository postRepository;
-    private final CommentsRepository commentsRepository;
     private final CurrentUserUtil currentUserUtil;
 
     @Override
@@ -51,9 +50,9 @@ public class ForumServiceMpl implements ForumService {
             throw new Exception();
         }
         Forum forum = forumRepository.findByForumName(forumDto.getForumName());
-        commentsRepository.deleteCommentsByForum(forum);
-        postRepository.deletePostByForum(forum);
-        forumRepository.deleteByForumName(forumDto.getForumName());
+        if (forum.getUser().getUserIdx() == currentUserUtil.getCurrentUser().getUserIdx())
+            forumRepository.deleteByForumName(forumDto.getForumName());
+        else throw new Exception();
     }
 
     @Override
