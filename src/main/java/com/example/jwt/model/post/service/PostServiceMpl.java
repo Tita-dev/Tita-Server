@@ -2,6 +2,7 @@ package com.example.jwt.model.post.service;
 
 import com.example.jwt.model.forum.Forum;
 import com.example.jwt.model.post.Post;
+import com.example.jwt.model.post.dto.PostResponseDto;
 import com.example.jwt.model.post.like.PostLike;
 import com.example.jwt.model.post.dto.PostChangeDto;
 import com.example.jwt.model.post.dto.PostDto;
@@ -44,8 +45,6 @@ public class PostServiceMpl implements PostService {
             map.put("CommentsCount",Long.toString(commentsRepository.countCommentsByPost(post)));
             postList.add(map);
         }
-        System.out.println("asdasd");
-        System.out.println(postRepository.findPostPostLikeOrder());
         return postList;
     }
 
@@ -86,5 +85,19 @@ public class PostServiceMpl implements PostService {
                 .user(currentUserUtil.getCurrentUser())
                 .build();
         return postLikeRepository.save(postLike);
+    }
+
+    @Override
+    public List<Map<String, String>> getBestPost() throws Exception {
+        List<Post> posts = postRepository.findTop5ByOrderByPostLikeList();
+        List<Map<String, String>> postList = new ArrayList<>();
+        for (Post post : posts) {
+            Map<String, String> map = new HashMap<>();
+            map.put("PostName", post.getPostName());
+            map.put("Content", post.getContent());
+            map.put("PostLike",Long.toString(postLikeRepository.countPostLikeByPost(post)));
+            postList.add(map);
+        }
+        return postList;
     }
 }

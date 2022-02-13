@@ -18,4 +18,6 @@ public interface PostService {
     Post postPut(String forumName, PostChangeDto postChangeDto) throws Exception;
 
     PostLike postLike(String forumName, PostDto postDto) throws Exception;
+
+    List<Map<String, String>> getBestPost() throws Exception;
 }
