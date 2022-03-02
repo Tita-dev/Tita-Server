@@ -1,10 +1,9 @@
 package com.example.jwt.controller;
 
-import com.example.jwt.dto.ForumChangeDto;
-import com.example.jwt.dto.ForumDto;
-import com.example.jwt.dto.PostChangeDto;
-import com.example.jwt.dto.PostDto;
-import com.example.jwt.service.ForumService;
+import com.example.jwt.model.forum.dto.ForumChangeDto;
+import com.example.jwt.model.forum.dto.ForumDto;
+import com.example.jwt.model.forum.controller.ForumController;
+import com.example.jwt.model.forum.service.ForumService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,7 +22,6 @@ import org.springframework.web.context.WebApplicationContext;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 
 @SpringBootTest

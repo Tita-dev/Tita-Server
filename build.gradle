@@ -48,6 +48,9 @@ dependencies {
     implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
     implementation 'com.querydsl:querydsl-jpa'
     implementation 'com.querydsl:querydsl-apt'
+    compile 'com.amazonaws:aws-java-sdk-ses:1.12.3'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
 }
 def querydslSrcDir = "$buildDir/generated/querydsl"
 

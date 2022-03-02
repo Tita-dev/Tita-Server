@@ -1,8 +1,8 @@
 package com.example.jwt.util;
 
-import com.example.jwt.advice.exception.UserNotFoundException;
-import com.example.jwt.domain.User;
-import com.example.jwt.repository.UserRepository;
+import com.example.jwt.exception.exception.UserNotFoundException;
+import com.example.jwt.model.user.User;
+import com.example.jwt.model.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;

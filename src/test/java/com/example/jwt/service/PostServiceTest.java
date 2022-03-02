@@ -1,11 +1,12 @@
 package com.example.jwt.service;
 
-import com.example.jwt.domain.Post;
-import com.example.jwt.dto.PostChangeDto;
-import com.example.jwt.dto.PostDto;
-import com.example.jwt.repository.ForumRepository;
-import com.example.jwt.repository.PostLikeRepository;
-import com.example.jwt.repository.PostRepository;
+import com.example.jwt.model.post.Post;
+import com.example.jwt.model.post.dto.PostChangeDto;
+import com.example.jwt.model.post.dto.PostDto;
+import com.example.jwt.model.post.service.PostService;
+import com.example.jwt.model.forum.repository.ForumRepository;
+import com.example.jwt.model.post.like.repository.PostLikeRepository;
+import com.example.jwt.model.post.repository.PostRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
