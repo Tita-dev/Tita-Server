@@ -18,7 +18,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity  http) throws Exception{
+        http
+                .cors().and()
+                .csrf().disable()
+                .httpBasic().disable();
+
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
         http.authorizeRequests()
+                .antMatchers("/tita/forum/**").hasAuthority("ROLE_STUDENT")
+                .antMatchers("/tita/admin/authorization/**").hasAuthority("ROLE_SCHOOL_ADMIN")
                 .antMatchers("/tita/**").permitAll()
                 .antMatchers("/swagger-resources/**").permitAll()
                 .anyRequest().authenticated();
