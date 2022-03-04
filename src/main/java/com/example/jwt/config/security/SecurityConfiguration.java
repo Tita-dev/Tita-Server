@@ -36,8 +36,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.authorizeRequests()
-                .antMatchers("/tita/forum/**").hasAuthority("ROLE_STUDENT")
-                //.hasAnyRole("ROLE_STUDENT","ROLE_DORMITORY_MANAGER","ROLE_SCHOOL_MANAGER","ROLE_SCHOOL_ADMIN")
+                .antMatchers("/tita/forum/**").hasAnyAuthority("ROLE_STUDENT","ROLE_DORMITORY_MANAGER","ROLE_SCHOOL_MANAGER","ROLE_SCHOOL_ADMIN")
                 .antMatchers("/tita/admin/authorization/**").hasAuthority("ROLE_SCHOOL_ADMIN")
                 .antMatchers("/tita/**").permitAll()
                 .anyRequest().authenticated();
