@@ -39,6 +39,7 @@ public class PostServiceMpl implements PostService {
         for (Post post : posts) {
             Map<String, String> map = new HashMap<>();
             map.put("PostIdx", Long.toString(post.getPostIdx()));
+            map.put("Notice", String.valueOf(post.getNotice()));
             map.put("PostName", post.getPostName());
             map.put("Content", post.getContent());
             map.put("PostLike",Long.toString(postLikeRepository.countPostLikeByPost(post)));
