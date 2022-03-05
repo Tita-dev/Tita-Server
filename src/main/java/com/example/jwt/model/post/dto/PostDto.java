@@ -21,10 +21,13 @@ public class PostDto {
     @Size(max = 500, min = 0)
     private String content;
 
+    private Boolean notice;
+
     public Post toEntity() {
         return Post.builder()
                 .postName(this.getPostName())
                 .content(this.getContent())
+                .notice(this.getNotice())
                 .build();
     }
 }
