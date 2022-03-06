@@ -53,5 +53,5 @@ public class Post extends BaseEntity {
     private Boolean notice = false;
 
     @OneToMany(mappedBy = "postLikeIdx", cascade = {CascadeType.ALL})
-    private List<PostLike> postLikeList = new ArrayList<PostLike>();
+    private List<PostLike> postLikeList = new ArrayList<>();
 }
