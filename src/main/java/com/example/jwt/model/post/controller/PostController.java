@@ -50,7 +50,12 @@ public class PostController {
     }
 
     @GetMapping("/best")
-    public SingleResult<List<Map<String, String>>> bestPost() throws Exception {
+    public SingleResult<List<Map<String, String>>> bestPost() {
         return responseService.getSingleResult(postService.getBestPost());
+    }
+
+    @GetMapping("/notice")
+    public SingleResult<List<Map<String, String>>> noticePost() {
+        return responseService.getSingleResult(postService.getNoticePost());
     }
 }
