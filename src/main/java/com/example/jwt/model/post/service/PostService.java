@@ -19,5 +19,7 @@ public interface PostService {
 
     PostLike postLike(String forumName, PostDto postDto) throws Exception;
 
-    List<Map<String, String>> getBestPost() throws Exception;
+    List<Map<String, String>> getBestPost();
+
+    List<Map<String, String>> getNoticePost();
 }
