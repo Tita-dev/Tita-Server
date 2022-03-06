@@ -17,7 +17,7 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
-public class AdminServiceMpl implements AdminService{
+public class AdminServiceImpl implements AdminService{
 
     private final UserService userService;
     private final UserRepository userRepository;

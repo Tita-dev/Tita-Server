@@ -21,7 +21,7 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
-public class CommentsServiceMpl implements CommentsService {
+public class CommentsServiceImpl implements CommentsService {
 
     private final ForumRepository forumRepository;
     private final PostRepository postRepository;

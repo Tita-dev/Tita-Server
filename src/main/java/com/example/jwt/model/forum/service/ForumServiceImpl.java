@@ -17,7 +17,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ForumServiceMpl implements ForumService {
+public class ForumServiceImpl implements ForumService {
 
     private final ForumRepository forumRepository;
     private final CurrentUserUtil currentUserUtil;

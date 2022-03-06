@@ -19,7 +19,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 @Service
 @Slf4j
-public class AuthServiceMpl implements UserService {
+public class AuthServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final RedisUtil redisUtil;
