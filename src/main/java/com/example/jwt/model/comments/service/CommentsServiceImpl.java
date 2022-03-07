@@ -10,6 +10,7 @@ import com.example.jwt.model.post.Post;
 import com.example.jwt.model.comments.dto.CommentsDto;
 import com.example.jwt.model.post.like.repository.PostLikeRepository;
 import com.example.jwt.model.post.repository.PostRepository;
+import com.example.jwt.model.user.enum_type.UserRole;
 import com.example.jwt.util.CurrentUserUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
-public class CommentsServiceMpl implements CommentsService {
+public class CommentsServiceImpl implements CommentsService {
 
     private final ForumRepository forumRepository;
     private final PostRepository postRepository;
@@ -60,7 +61,12 @@ public class CommentsServiceMpl implements CommentsService {
     @Override
     public void commentsDelete(Long postIdx, CommentsDto commentsDto) throws Exception {
         Post post = postRepository.findByPostIdx(postIdx);
-        commentsRepository.deleteCommentsByCommentsContentAndPost(commentsDto.getCommentsContent(), post);
+        Comments comments = commentsRepository.findByCommentsContentAndPost(commentsDto.getCommentsContent(),post);
+        if (currentUserUtil.getCurrentUser().getRole() == UserRole.ROLE_SCHOOL_ADMIN)
+            commentsRepository.deleteCommentsByCommentsContentAndPost(commentsDto.getCommentsContent(), post);
+        else if (comments.getUser().getUserIdx() == currentUserUtil.getCurrentUser().getUserIdx())
+            commentsRepository.deleteCommentsByCommentsContentAndPost(commentsDto.getCommentsContent(), post);
+        else throw new Exception();
     }
 
     @Override

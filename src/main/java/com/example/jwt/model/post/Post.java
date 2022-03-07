@@ -5,6 +5,8 @@ import com.example.jwt.model.forum.Forum;
 import com.example.jwt.model.post.like.PostLike;
 import com.example.jwt.model.user.User;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -20,6 +22,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Table(name = "post")
+@DynamicInsert
 public class Post extends BaseEntity {
 
     @Id
@@ -45,6 +48,10 @@ public class Post extends BaseEntity {
     @Column(name = "content", nullable = false)
     private String content;
 
+    @Column(name = "notice")
+    @ColumnDefault("false")
+    private Boolean notice = false;
+
     @OneToMany(mappedBy = "postLikeIdx", cascade = {CascadeType.ALL})
-    private List<PostLike> postLikeList = new ArrayList<PostLike>();
+    private List<PostLike> postLikeList = new ArrayList<>();
 }

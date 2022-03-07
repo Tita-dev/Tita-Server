@@ -3,6 +3,8 @@ package com.example.jwt.model.user;
 import com.example.jwt.model.user.enum_type.UserRole;
 import com.example.jwt.model.base_time.BaseEntity;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -18,7 +20,7 @@ import java.util.Collection;
 @AllArgsConstructor
 @Entity
 @Builder
-
+@DynamicInsert
 @Table(name = "user")
 public class User extends BaseEntity implements UserDetails {
 
@@ -45,9 +47,9 @@ public class User extends BaseEntity implements UserDetails {
     @Column(name = "email", unique = true, nullable = false)
     private String email;
 
-    @Column(name = "role")
+    @Column(name = "role", columnDefinition = "varchar(255) default 'ROLE_NOT_STUDENT'")
     @Enumerated(EnumType.STRING)
-    private UserRole role = UserRole.ROLE_NOT_STUDENT;
+    private UserRole role;
 
 
     @Override

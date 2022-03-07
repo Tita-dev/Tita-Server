@@ -24,5 +24,7 @@ public interface PostRepository extends JpaRepository<Post, Long>, PostCustomRep
 
     List<Post> findTop5ByOrderByPostLikeList();
 
+    List<Post> findAllByNoticeTrue();
+
     //List<PostResponseDto> findPostPostLikeOrder();
 }

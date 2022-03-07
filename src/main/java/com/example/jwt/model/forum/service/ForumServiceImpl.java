@@ -7,6 +7,7 @@ import com.example.jwt.model.comments.repository.CommentsRepository;
 import com.example.jwt.model.forum.repository.ForumRepository;
 import com.example.jwt.model.post.like.repository.PostLikeRepository;
 import com.example.jwt.model.post.repository.PostRepository;
+import com.example.jwt.model.user.enum_type.UserRole;
 import com.example.jwt.util.CurrentUserUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ForumServiceMpl implements ForumService {
+public class ForumServiceImpl implements ForumService {
 
     private final ForumRepository forumRepository;
     private final CurrentUserUtil currentUserUtil;
@@ -50,7 +51,9 @@ public class ForumServiceMpl implements ForumService {
             throw new Exception();
         }
         Forum forum = forumRepository.findByForumName(forumDto.getForumName());
-        if (forum.getUser().getUserIdx() == currentUserUtil.getCurrentUser().getUserIdx())
+        if (currentUserUtil.getCurrentUser().getRole() == UserRole.ROLE_SCHOOL_ADMIN)
+            forumRepository.deleteByForumName(forumDto.getForumName());
+        else if (forum.getUser().getUserIdx() == currentUserUtil.getCurrentUser().getUserIdx())
             forumRepository.deleteByForumName(forumDto.getForumName());
         else throw new Exception();
     }
