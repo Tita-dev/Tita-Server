@@ -1,5 +1,6 @@
 package com.example.jwt.model.post.controller;
 
+import com.example.jwt.model.post.dto.PostDeleteDto;
 import com.example.jwt.response.result.CommonResult;
 import com.example.jwt.response.ResponseService;
 import com.example.jwt.response.result.SingleResult;
@@ -32,7 +33,7 @@ public class PostController {
     }
 
     @DeleteMapping("/{forumName}/delete")
-    public CommonResult postDelete(@PathVariable String forumName, @RequestBody PostDto postDto) throws Exception {
+    public CommonResult postDelete(@PathVariable String forumName, @RequestBody PostDeleteDto postDto) throws Exception {
         postService.postDelete(forumName, postDto);
         return responseService.getSuccessResult();
     }

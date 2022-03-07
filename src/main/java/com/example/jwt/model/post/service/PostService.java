@@ -1,6 +1,7 @@
 package com.example.jwt.model.post.service;
 
 import com.example.jwt.model.post.Post;
+import com.example.jwt.model.post.dto.PostDeleteDto;
 import com.example.jwt.model.post.like.PostLike;
 import com.example.jwt.model.post.dto.PostChangeDto;
 import com.example.jwt.model.post.dto.PostDto;
@@ -13,7 +14,7 @@ public interface PostService {
 
     Post postCreate(String forumName, PostDto postDto) throws Exception;
 
-    void postDelete(String forumName, PostDto postDto) throws Exception;
+    void postDelete(String forumName, PostDeleteDto postDto) throws Exception;
 
     Post postPut(String forumName, PostChangeDto postChangeDto) throws Exception;
 

@@ -2,6 +2,7 @@ package com.example.jwt.service;
 
 import com.example.jwt.model.post.Post;
 import com.example.jwt.model.post.dto.PostChangeDto;
+import com.example.jwt.model.post.dto.PostDeleteDto;
 import com.example.jwt.model.post.dto.PostDto;
 import com.example.jwt.model.post.service.PostService;
 import com.example.jwt.model.forum.repository.ForumRepository;
@@ -70,7 +71,7 @@ class PostServiceTest {
     @Test
     void postDelete() throws Exception {
         //given
-        PostDto postDto = PostDto.builder()
+        PostDeleteDto postDto = PostDeleteDto.builder()
                 .postName("민경모는 에밀리아")
                 .content("를 좋아하냐????")
                 .build();
