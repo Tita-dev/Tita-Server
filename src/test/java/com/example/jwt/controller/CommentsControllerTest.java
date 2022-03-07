@@ -1,7 +1,8 @@
 package com.example.jwt.controller;
 
-import com.example.jwt.dto.CommentsDto;
-import com.example.jwt.service.CommentsService;
+import com.example.jwt.model.comments.dto.CommentsDto;
+import com.example.jwt.model.comments.controller.CommentsController;
+import com.example.jwt.model.comments.service.CommentsService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;

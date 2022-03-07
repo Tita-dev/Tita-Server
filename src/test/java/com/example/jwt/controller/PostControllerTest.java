@@ -1,9 +1,9 @@
 package com.example.jwt.controller;
 
-import com.example.jwt.dto.PostChangeDto;
-import com.example.jwt.dto.PostDto;
-import com.example.jwt.service.ForumService;
-import com.example.jwt.service.PostService;
+import com.example.jwt.model.post.dto.PostChangeDto;
+import com.example.jwt.model.post.dto.PostDto;
+import com.example.jwt.model.post.controller.PostController;
+import com.example.jwt.model.post.service.PostService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,9 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.context.WebApplicationContext;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;

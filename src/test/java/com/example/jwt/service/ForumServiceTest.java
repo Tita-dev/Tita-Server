@@ -1,23 +1,18 @@
 package com.example.jwt.service;
 
-import com.example.jwt.domain.Forum;
-import com.example.jwt.domain.Post;
-import com.example.jwt.dto.ForumChangeDto;
-import com.example.jwt.dto.ForumDto;
-import com.example.jwt.dto.PostChangeDto;
-import com.example.jwt.dto.PostDto;
-import com.example.jwt.repository.ForumRepository;
-import com.example.jwt.repository.PostRepository;
+import com.example.jwt.model.forum.Forum;
+import com.example.jwt.model.forum.dto.ForumChangeDto;
+import com.example.jwt.model.forum.dto.ForumDto;
+import com.example.jwt.model.forum.service.ForumService;
+import com.example.jwt.model.forum.repository.ForumRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
