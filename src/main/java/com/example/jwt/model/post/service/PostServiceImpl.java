@@ -2,6 +2,7 @@ package com.example.jwt.model.post.service;
 
 import com.example.jwt.model.forum.Forum;
 import com.example.jwt.model.post.Post;
+import com.example.jwt.model.post.dto.PostDeleteDto;
 import com.example.jwt.model.post.dto.PostResponseDto;
 import com.example.jwt.model.post.like.PostLike;
 import com.example.jwt.model.post.dto.PostChangeDto;
@@ -10,6 +11,7 @@ import com.example.jwt.model.comments.repository.CommentsRepository;
 import com.example.jwt.model.forum.repository.ForumRepository;
 import com.example.jwt.model.post.like.repository.PostLikeRepository;
 import com.example.jwt.model.post.repository.PostRepository;
+import com.example.jwt.model.user.enum_type.UserRole;
 import com.example.jwt.util.CurrentUserUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -59,10 +61,12 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void postDelete(String forumName, PostDto postDto) throws Exception {
+    public void postDelete(String forumName, PostDeleteDto postDto) throws Exception {
         Forum forum = forumRepository.findByForumName(forumName);
         Post post = postRepository.findByPostNameAndForum(postDto.getPostName(), forum);
-        if (post.getUser().getUserIdx() == currentUserUtil.getCurrentUser().getUserIdx())
+        if (currentUserUtil.getCurrentUser().getRole() == UserRole.ROLE_SCHOOL_ADMIN)
+            postRepository.deletePostByPostNameAndForum(postDto.getPostName(), forum);
+        else if (post.getUser().getUserIdx() == currentUserUtil.getCurrentUser().getUserIdx())
             postRepository.deletePostByPostNameAndForum(postDto.getPostName(), forum);
         else throw new Exception();
     }
