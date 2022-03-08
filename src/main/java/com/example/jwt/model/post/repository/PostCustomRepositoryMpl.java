@@ -1,15 +1,7 @@
 package com.example.jwt.model.post.repository;
 
-import com.example.jwt.model.post.dto.PostDto;
-import com.example.jwt.model.post.dto.PostResponseDto;
-import com.example.jwt.model.post.dto.QPostResponseDto;
-import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
-
-import java.util.List;
-
-import static com.example.jwt.model.post.QPost.post;
 
 @RequiredArgsConstructor
 public class PostCustomRepositoryMpl implements PostCustomRepository{

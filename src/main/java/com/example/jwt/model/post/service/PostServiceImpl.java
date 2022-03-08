@@ -38,6 +38,7 @@ public class PostServiceImpl implements PostService {
         List<Map<String, String>> postList = new ArrayList<>();
 
 
+
         for (Post post : posts) {
             Map<String, String> map = new HashMap<>();
             map.put("PostIdx", Long.toString(post.getPostIdx()));
