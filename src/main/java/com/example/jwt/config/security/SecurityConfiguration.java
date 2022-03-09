@@ -1,7 +1,6 @@
 package com.example.jwt.config.security;
 
 import com.example.jwt.config.security.auth.MyUserDetails;
-import com.example.jwt.config.security.jwt.JwtRequestFilter;
 import com.example.jwt.config.security.jwt.JwtTokenFilterConfigurer;
 import com.example.jwt.config.security.jwt.JwtUtil;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +12,6 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
