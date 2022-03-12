@@ -47,16 +47,15 @@ public class AuthServiceImpl implements UserService {
     @Override
     public Map<String, String> loginUser(String id, String password) {
         User user = userRepository.findByUsername(id).orElseThrow(()-> new UserNotFoundException());
-        boolean passwordCheak = passwordEncoder.matches(password, user.getPassword());
-        if (!passwordCheak) throw new UserNotFoundException();
-        final String accessToken = jwtUtil.generateToken(user.getUsername());
-        final String refreshJwt = jwtUtil.generateRefreshToken(user.getUsername());
-        redisUtil.setDataExpire(user.getUsername(), refreshJwt, JwtUtil.REFRESH_TOKEN_VALIDATION_SECOND);
-        Map<String, String> map = new HashMap<>();
-        map.put("username", user.getUsername());
-        map.put("Role", String.valueOf(user.getRole()));
-        map.put("accessToken", accessToken);
-        map.put("refreshToken", refreshJwt);
+        if (!passwordEncoder.matches(password,user.getPassword())) throw new UserNotFoundException();
+
+        String accessToken = jwtUtil.generateToken(user.getUsername());
+        String refreshToken = jwtUtil.generateRefreshToken(user.getUsername());
+
+        redisUtil.setDataExpire(user.getUsername(), refreshToken, JwtUtil.REFRESH_TOKEN_VALIDATION_SECOND);
+
+
+        Map<String, String> map = Map.of("username",user.getUsername(),"ROLE",String.valueOf(user.getRole()),"accessToken",accessToken,"refreshToken",refreshToken);
         return map;
     }
 
