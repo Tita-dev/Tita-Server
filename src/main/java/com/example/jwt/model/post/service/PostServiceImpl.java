@@ -107,14 +107,13 @@ public class PostServiceImpl implements PostService {
     @Override
     public List<Map<String, String>> getNoticePost() {
         List<Post> posts = postRepository.findAllByNoticeTrue();
-        List<Map<String, String>> postList = new ArrayList<>();
-        for (Post post : posts) {
-            Map<String, String> map = new HashMap<>();
-            map.put("PostName", post.getPostName());
-            map.put("Content", post.getContent());
-            map.put("PostLike",Long.toString(postLikeRepository.countPostLikeByPost(post)));
-            postList.add(map);
-        }
+        List<Map<String, String>> postList = posts.stream().map(
+                post -> {
+                    Map<String,String> map = Map.of("PostName", post.getPostName(),"Content", post.getContent(),
+                            "PostLike",Long.toString(postLikeRepository.countPostLikeByPost(post)));
+                    return map;
+                }
+        ).collect(Collectors.toList());
         return postList;
     }
 }
