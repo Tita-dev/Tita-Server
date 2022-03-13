@@ -1,14 +1,13 @@
 package com.example.jwt.model.post.service;
 
-import com.example.jwt.model.forum.Forum;
-import com.example.jwt.model.post.Post;
-import com.example.jwt.model.post.dto.PostDeleteDto;
-import com.example.jwt.model.post.dto.PostResponseDto;
-import com.example.jwt.model.post.like.PostLike;
-import com.example.jwt.model.post.dto.PostChangeDto;
-import com.example.jwt.model.post.dto.PostDto;
 import com.example.jwt.model.comments.repository.CommentsRepository;
+import com.example.jwt.model.forum.Forum;
 import com.example.jwt.model.forum.repository.ForumRepository;
+import com.example.jwt.model.post.Post;
+import com.example.jwt.model.post.dto.PostChangeDto;
+import com.example.jwt.model.post.dto.PostDeleteDto;
+import com.example.jwt.model.post.dto.PostDto;
+import com.example.jwt.model.post.like.PostLike;
 import com.example.jwt.model.post.like.repository.PostLikeRepository;
 import com.example.jwt.model.post.repository.PostRepository;
 import com.example.jwt.model.user.enum_type.UserRole;
@@ -20,6 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -33,22 +33,16 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<Map<String, String>> getForumPostList(String forumName) throws Exception {
-        Forum forum = forumRepository.findByForumName(forumName);
-        List<Post> posts = postRepository.findAllByForum(forum);
-        List<Map<String, String>> postList = new ArrayList<>();
-
-
-
-        for (Post post : posts) {
-            Map<String, String> map = new HashMap<>();
-            map.put("PostIdx", Long.toString(post.getPostIdx()));
-            map.put("Notice", String.valueOf(post.getNotice()));
-            map.put("PostName", post.getPostName());
-            map.put("Content", post.getContent());
-            map.put("PostLike",Long.toString(postLikeRepository.countPostLikeByPost(post)));
-            map.put("CommentsCount",Long.toString(commentsRepository.countCommentsByPost(post)));
-            postList.add(map);
-        }
+        List<Post> posts = postRepository.findAllByForum(forumRepository.findByForumName(forumName));
+        List<Map<String, String>> postList = posts.stream().map(
+                        post -> {
+                            Map<String,String> map = Map.of("PostIdx", Long.toString(post.getPostIdx()),"Notice", String.valueOf(post.getNotice()),
+                                    "PostName", post.getPostName(),"Content", post.getContent(),
+                                    "PostLike",Long.toString(postLikeRepository.countPostLikeByPost(post)),
+                                    "CommentsCount",Long.toString(commentsRepository.countCommentsByPost(post)));
+                            return map;
+                        })
+                .collect(Collectors.toList());
         return postList;
     }
 
