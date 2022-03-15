@@ -21,8 +21,7 @@ public class CommentsController {
 
     @GetMapping("/{forumName}/{postIdx}")
     public SingleResult<List<Map<String, String>>> getPostAndComments(@PathVariable Long postIdx) throws Exception {
-        List<Map<String, String>> postAndCommentsDto = commentsService.getPostAndComments(postIdx);
-        return responseService.getSingleResult(postAndCommentsDto);
+        return responseService.getSingleResult(commentsService.getPostAndComments(postIdx));
     }
 
     @PostMapping("/{forumName}/{postIdx}/create")
