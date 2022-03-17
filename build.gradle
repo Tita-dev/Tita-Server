@@ -1,6 +1,7 @@
 plugins {
     id 'org.springframework.boot' version '2.4.5'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
     id 'java'
 }
 
@@ -46,28 +47,27 @@ dependencies {
     implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
     implementation 'com.querydsl:querydsl-jpa'
     implementation 'com.querydsl:querydsl-apt'
-    compile 'com.amazonaws:aws-java-sdk-ses:1.12.3'
+    implementation 'com.amazonaws:aws-java-sdk-ses:1.12.3'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 }
-def querydslSrcDir = "$buildDir/generated/querydsl"
+    def querydslSrcDir = 'src/main/generated'
 
-querydsl {
-    jpa = true
-    querydslSourcesDir = querydslSrcDir
-}
-
-sourceSets {
-    main.java.srcDirs querydslSrcDir
-}
-
-configurations {
-    querydsl.extendsFrom compileClasspath
-}
-
-compileQuerydsl{
-    options.annotationProcessorPath = configurations.querydsl
-}
-test {
-    useJUnitPlatform()
-}
+    querydsl {
+        library = "com.querydsl:querydsl-apt"
+        jpa = true
+        querydslSourcesDir = querydslSrcDir
+    }
+    compileQuerydsl{// querydsl 컴파일시 사용하는 애노테이션프로세서('com.querydsl.apt.jpa.JPAAnnotationProcessor')의 경로를 querydsl 이 지정한 경로를 이용한다는 선언
+        options.annotationProcessorPath = configurations.querydsl
+    }
+    configurations {
+        querydsl.extendsFrom compileClasspath
+    }
+    sourceSets {
+        main {
+            java {
+                srcDirs = ['src/main/java', querydslSrcDir]
+            }
+        }
+    } // 이 부분이 추가. tasks.withType(JavaCompile) { options.annotationProcessorGeneratedSourcesDirectory = file(querydslSrcDir) }
