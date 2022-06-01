@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -27,11 +28,12 @@ public class ForumServiceImpl implements ForumService {
     @Transactional
     public List<String> getForumList() throws Exception {
         List<Forum> forums = forumRepository.findAll();
-        List<String> forumList = new ArrayList<>();
+        List<String> forumList = forums.stream().map(
+                forum -> {
+                    return forum.getForumName();
+                }
+        ).collect(Collectors.toList());
 
-        for (Forum forum : forums) {
-            forumList.add(forum.getForumName());
-        }
         return forumList;
     }
 

@@ -1,21 +1,8 @@
 package com.example.jwt.config.security.jwt;
 
-import com.example.jwt.config.security.auth.MyUserDetails;
-import com.example.jwt.exception.exception.AccessTokenExpiredException;
-import com.example.jwt.exception.exception.InvalidTokenException;
-import com.example.jwt.exception.exception.UserNotFoundException;
-import com.example.jwt.util.RedisUtil;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.MalformedJwtException;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
