@@ -71,3 +71,4 @@ dependencies {
             }
         }
     } // 이 부분이 추가. tasks.withType(JavaCompile) { options.annotationProcessorGeneratedSourcesDirectory = file(querydslSrcDir) }
+
