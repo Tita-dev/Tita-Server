@@ -1,6 +1,5 @@
 package com.example.jwt.config.security.auth;
 
-import com.example.jwt.config.security.SecurityConfiguration;
 import com.example.jwt.exception.exception.UserNotFoundException;
 import com.example.jwt.model.user.SecurityUser;
 import com.example.jwt.model.user.User;
@@ -10,7 +9,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Component

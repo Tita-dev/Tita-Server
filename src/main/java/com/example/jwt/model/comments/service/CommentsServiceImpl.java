@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -35,15 +36,26 @@ public class CommentsServiceImpl implements CommentsService {
     public List<Map<String, String>> getPostAndComments(Long postIdx) throws Exception {
         Post post = postRepository.findByPostIdx(postIdx);
         List<Comments> commentsList = commentsRepository.findAllByPost(post);
-        List<Map<String, String>> commetsMapList = new ArrayList<>();
-        Map<String, String> postMap = new HashMap<>();
+        Map<String, String> postMap = Map.of("Content", post.getContent(),"PostName", post.getPostName());
+        List<Map<String, String>> commetsMapList = commentsList.stream().map(
+                comments ->{
+                    Map<String,String> map = Map.of("Comments", comments.getCommentsContent());
+                    return map;
+                }
+        ).collect(Collectors.toList());
+        commetsMapList.add(postMap);
+
+
+        /*
         Map<String, String> commentsMap = new HashMap<>();
-        postMap.put("Content", post.getContent());
-        postMap.put("PostName", post.getPostName());
+        postMap.put(;
+        postMap.put();
+        commetsMapList.add(postMap);
         for (Comments comments : commentsList) {
             commentsMap.put("Comments", comments.getCommentsContent());
             commetsMapList.add(commentsMap);
-        }
+        }*/
+
         return commetsMapList;
     }
 
