@@ -1,11 +1,11 @@
-package com.example.jwt.util;
+package com.example.jwt.config.security.redis;
 
 import org.springframework.stereotype.Service;
 
 import java.util.Random;
 
 @Service
-public class KeyUtil {
+public class KeyConfig {
     protected int size;
 
     public String getKey(int size) {

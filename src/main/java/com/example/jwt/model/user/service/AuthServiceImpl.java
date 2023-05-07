@@ -1,11 +1,13 @@
 package com.example.jwt.model.user.service;
 
+import com.example.jwt.config.security.redis.KeyConfig;
+import com.example.jwt.config.security.redis.RedisConfig;
+import com.example.jwt.config.security.auth.CurrentUser;
 import com.example.jwt.config.security.jwt.JwtUtil;
 import com.example.jwt.exception.exception.*;
 import com.example.jwt.model.user.enum_type.UserRole;
 import com.example.jwt.model.user.dto.UserDto;
 import com.example.jwt.model.user.service.email.EmailService;
-import com.example.jwt.util.*;
 import com.example.jwt.model.user.User;
 import com.example.jwt.model.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.Map;
 
 @RequiredArgsConstructor
@@ -22,11 +23,11 @@ import java.util.Map;
 public class AuthServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final RedisUtil redisUtil;
-    private final KeyUtil keyUtil;
+    private final RedisConfig redisConfig;
+    private final KeyConfig keyConfig;
     private final JwtUtil jwtUtil;
     private final PasswordEncoder passwordEncoder;
-    private final CurrentUserUtil currentUserUtil;
+    private final CurrentUser currentUser;
     private final EmailService emailService;
 
     @Override
@@ -52,7 +53,7 @@ public class AuthServiceImpl implements UserService {
         String accessToken = jwtUtil.generateToken(user.getUsername());
         String refreshToken = jwtUtil.generateRefreshToken(user.getUsername());
 
-        redisUtil.setDataExpire(user.getUsername(), refreshToken, JwtUtil.REFRESH_TOKEN_VALIDATION_SECOND);
+        redisConfig.setDataExpire(user.getUsername(), refreshToken, JwtUtil.REFRESH_TOKEN_VALIDATION_SECOND);
 
 
         Map<String, String> map = Map.of("username",user.getUsername(),"ROLE",String.valueOf(user.getRole()),"accessToken",accessToken,"refreshToken",refreshToken);
@@ -61,23 +62,23 @@ public class AuthServiceImpl implements UserService {
 
     @Override
     public void logout(){
-        redisUtil.deleteData(currentUserUtil.getCurrentUser().getUsername());
+        redisConfig.deleteData(currentUser.getCurrentUser().getUsername());
     }
 
     @Override
     public void sendVerificationMail(User user) throws UserNotFoundException {
         if (user == null) throw new UserNotFoundException();
-        String authKey = keyUtil.getKey(6);
-        redisUtil.setDataExpire(authKey, user.getUsername(), 60 * 30L);
+        String authKey = keyConfig.getKey(6);
+        redisConfig.setDataExpire(authKey, user.getUsername(), 60 * 30L);
         emailService.send(user.getEmail(), "[Tita] 회원가입 인증 이메일 입니다.", "인증번호는 " + authKey);
     }
 
     @Override
     public void verifyEmail(String key) throws UserNotFoundException {
-        String memberId = redisUtil.getData(key);
+        String memberId = redisConfig.getData(key);
         User user = userRepository.findByUsername(memberId).orElseThrow(()-> new InvalidAuthenticationNumberException());
         modifyUserRole(user, UserRole.ROLE_STUDENT);
-        redisUtil.deleteData(key);
+        redisConfig.deleteData(key);
     }
 
     @Override
@@ -94,15 +95,15 @@ public class AuthServiceImpl implements UserService {
 
     @Override
     public void requestChangePassword(User user) throws UserNotFoundException {
-        String authKey = keyUtil.getKey(6);
+        String authKey = keyConfig.getKey(6);
         if (user == null) throw new UserNotFoundException();
-        redisUtil.setDataExpire(authKey, user.getUsername(), 60 * 30L);
+        redisConfig.setDataExpire(authKey, user.getUsername(), 60 * 30L);
         emailService.send(user.getEmail(), "[Tita] 사용자 비밀번호 변경 메일입니다.", "인증번호는 " + authKey);
     }
 
     @Override
     public void isPasswordKeyValidate(String key) {
-        String userName = redisUtil.getData(key);
+        String userName = redisConfig.getData(key);
         User user = userRepository.findByUsername(userName).orElseThrow(()-> new InvalidAuthenticationNumberException());
         modifyUserRole(user, UserRole.ROLE_PASSWORD_CHANGE);
     }
@@ -119,14 +120,14 @@ public class AuthServiceImpl implements UserService {
     public void requestFindUsername(String email) throws Exception {
         User user = userRepository.findByEmail(email);
         if (user == null) throw new UserNotFoundException();
-        String authKey = keyUtil.getKey(6);
-        redisUtil.setDataExpire(authKey, user.getUsername(), 60 * 30L);
+        String authKey = keyConfig.getKey(6);
+        redisConfig.setDataExpire(authKey, user.getUsername(), 60 * 30L);
         emailService.send(user.getEmail(), "[Tita] 사용자 아이디 확인 메일입니다.", "인증번호는 " + authKey);
     }
 
     @Override
     public String responseFindUsername(String key) throws Exception {
-        String userName = redisUtil.getData(key);
+        String userName = redisConfig.getData(key);
         User user = userRepository.findByUsername(userName).orElseThrow(()-> new InvalidAuthenticationNumberException());
         return user.getUsername();
     }
