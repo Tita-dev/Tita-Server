@@ -3,17 +3,13 @@ package com.example.jwt.model.forum.service;
 import com.example.jwt.model.forum.dto.ForumChangeDto;
 import com.example.jwt.model.forum.dto.ForumDto;
 import com.example.jwt.model.forum.Forum;
-import com.example.jwt.model.comments.repository.CommentsRepository;
 import com.example.jwt.model.forum.repository.ForumRepository;
-import com.example.jwt.model.post.like.repository.PostLikeRepository;
-import com.example.jwt.model.post.repository.PostRepository;
 import com.example.jwt.model.user.enum_type.UserRole;
-import com.example.jwt.util.CurrentUserUtil;
+import com.example.jwt.config.security.auth.CurrentUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,7 +18,7 @@ import java.util.stream.Collectors;
 public class ForumServiceImpl implements ForumService {
 
     private final ForumRepository forumRepository;
-    private final CurrentUserUtil currentUserUtil;
+    private final CurrentUser currentUser;
 
     @Override
     @Transactional
@@ -43,7 +39,7 @@ public class ForumServiceImpl implements ForumService {
             throw new Exception();
         }
         Forum forum = forumDto.toEntity();
-        forum.setUser(currentUserUtil.getCurrentUser());
+        forum.setUser(currentUser.getCurrentUser());
         return forumRepository.save(forum);
     }
 
@@ -53,9 +49,9 @@ public class ForumServiceImpl implements ForumService {
             throw new Exception();
         }
         Forum forum = forumRepository.findByForumName(forumDto.getForumName());
-        if (currentUserUtil.getCurrentUser().getRole() == UserRole.ROLE_SCHOOL_ADMIN)
+        if (currentUser.getCurrentUser().getRole() == UserRole.ROLE_SCHOOL_ADMIN)
             forumRepository.deleteByForumName(forumDto.getForumName());
-        else if (forum.getUser().getUserIdx() == currentUserUtil.getCurrentUser().getUserIdx())
+        else if (forum.getUser().getUserIdx() == currentUser.getCurrentUser().getUserIdx())
             forumRepository.deleteByForumName(forumDto.getForumName());
         else throw new Exception();
     }

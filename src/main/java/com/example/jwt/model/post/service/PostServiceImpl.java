@@ -11,12 +11,10 @@ import com.example.jwt.model.post.like.PostLike;
 import com.example.jwt.model.post.like.repository.PostLikeRepository;
 import com.example.jwt.model.post.repository.PostRepository;
 import com.example.jwt.model.user.enum_type.UserRole;
-import com.example.jwt.util.CurrentUserUtil;
+import com.example.jwt.config.security.auth.CurrentUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -28,7 +26,7 @@ public class PostServiceImpl implements PostService {
     private final ForumRepository forumRepository;
     private final PostRepository postRepository;
     private final CommentsRepository commentsRepository;
-    private final CurrentUserUtil currentUserUtil;
+    private final CurrentUser currentUser;
     private final PostLikeRepository postLikeRepository;
 
     @Override
@@ -51,7 +49,7 @@ public class PostServiceImpl implements PostService {
         Forum forum = forumRepository.findByForumName(forumName);
         Post post = postDto.toEntity();
         post.setForum(forum);
-        post.setUser(currentUserUtil.getCurrentUser());
+        post.setUser(currentUser.getCurrentUser());
         return postRepository.save(post);
     }
 
@@ -59,9 +57,9 @@ public class PostServiceImpl implements PostService {
     public void postDelete(String forumName, PostDeleteDto postDto) throws Exception {
         Forum forum = forumRepository.findByForumName(forumName);
         Post post = postRepository.findByPostNameAndForum(postDto.getPostName(), forum);
-        if (currentUserUtil.getCurrentUser().getRole() == UserRole.ROLE_SCHOOL_ADMIN)
+        if (currentUser.getCurrentUser().getRole() == UserRole.ROLE_SCHOOL_ADMIN)
             postRepository.deletePostByPostNameAndForum(postDto.getPostName(), forum);
-        else if (post.getUser().getUserIdx() == currentUserUtil.getCurrentUser().getUserIdx())
+        else if (post.getUser().getUserIdx() == currentUser.getCurrentUser().getUserIdx())
             postRepository.deletePostByPostNameAndForum(postDto.getPostName(), forum);
         else throw new Exception();
     }
@@ -70,7 +68,7 @@ public class PostServiceImpl implements PostService {
     public Post postPut(String forumName, PostChangeDto postChangeDto) throws Exception {
         Forum forum = forumRepository.findByForumName(forumName);
         Post post = postRepository.findByPostNameAndForum(postChangeDto.getPostName(), forum);
-        if (post.getUser().getUserIdx() == currentUserUtil.getCurrentUser().getUserIdx()) {
+        if (post.getUser().getUserIdx() == currentUser.getCurrentUser().getUserIdx()) {
             post.setPostName(postChangeDto.getNewPostName());
             post.setContent(postChangeDto.getNewContent());
             return postRepository.save(post);
@@ -86,7 +84,7 @@ public class PostServiceImpl implements PostService {
         }
         PostLike postLike = PostLike.builder()
                 .post(postRepository.findByPostNameAndForum(postDto.getPostName(), forum))
-                .user(currentUserUtil.getCurrentUser())
+                .user(currentUser.getCurrentUser())
                 .build();
         return postLikeRepository.save(postLike);
     }

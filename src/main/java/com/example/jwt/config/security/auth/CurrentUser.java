@@ -1,4 +1,4 @@
-package com.example.jwt.util;
+package com.example.jwt.config.security.auth;
 
 import com.example.jwt.exception.exception.UserNotFoundException;
 import com.example.jwt.model.user.User;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class CurrentUserUtil {
+public class CurrentUser {
 
     private final UserRepository userRepository;
 
@@ -26,6 +26,6 @@ public class CurrentUserUtil {
     }
 
     public User getCurrentUser(){
-        return userRepository.findByUsername(CurrentUserUtil.getCurrentUsername()).orElseThrow(()-> new UserNotFoundException());
+        return userRepository.findByUsername(CurrentUser.getCurrentUsername()).orElseThrow(()-> new UserNotFoundException());
     }
 }

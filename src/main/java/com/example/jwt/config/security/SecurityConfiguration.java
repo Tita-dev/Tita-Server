@@ -25,7 +25,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private final JwtUtil jwtUtil;
 
     @Override
-    protected void configure(HttpSecurity  http) throws Exception{
+    protected void configure(HttpSecurity http) throws Exception{
         http
                 .cors().and()
                 .csrf().disable()

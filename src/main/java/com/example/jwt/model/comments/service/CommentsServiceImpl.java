@@ -11,12 +11,10 @@ import com.example.jwt.model.comments.dto.CommentsDto;
 import com.example.jwt.model.post.like.repository.PostLikeRepository;
 import com.example.jwt.model.post.repository.PostRepository;
 import com.example.jwt.model.user.enum_type.UserRole;
-import com.example.jwt.util.CurrentUserUtil;
+import com.example.jwt.config.security.auth.CurrentUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -28,7 +26,7 @@ public class CommentsServiceImpl implements CommentsService {
     private final ForumRepository forumRepository;
     private final PostRepository postRepository;
     private final CommentsRepository commentsRepository;
-    private final CurrentUserUtil currentUserUtil;
+    private final CurrentUser currentUser;
     private final CommentsLikeRepository commentsLikeRepository;
     private final PostLikeRepository postLikeRepository;
 
@@ -66,7 +64,7 @@ public class CommentsServiceImpl implements CommentsService {
         Comments comments = commentsDto.toEntity();
         comments.setPost(post);
         comments.setForum(forum);
-        comments.setUser(currentUserUtil.getCurrentUser());
+        comments.setUser(currentUser.getCurrentUser());
         return commentsRepository.save(comments);
     }
 
@@ -74,9 +72,9 @@ public class CommentsServiceImpl implements CommentsService {
     public void commentsDelete(Long postIdx, CommentsDto commentsDto) throws Exception {
         Post post = postRepository.findByPostIdx(postIdx);
         Comments comments = commentsRepository.findByCommentsContentAndPost(commentsDto.getCommentsContent(),post);
-        if (currentUserUtil.getCurrentUser().getRole() == UserRole.ROLE_SCHOOL_ADMIN)
+        if (currentUser.getCurrentUser().getRole() == UserRole.ROLE_SCHOOL_ADMIN)
             commentsRepository.deleteCommentsByCommentsContentAndPost(commentsDto.getCommentsContent(), post);
-        else if (comments.getUser().getUserIdx() == currentUserUtil.getCurrentUser().getUserIdx())
+        else if (comments.getUser().getUserIdx() == currentUser.getCurrentUser().getUserIdx())
             commentsRepository.deleteCommentsByCommentsContentAndPost(commentsDto.getCommentsContent(), post);
         else throw new Exception();
     }
@@ -85,7 +83,7 @@ public class CommentsServiceImpl implements CommentsService {
     public CommentsLike commentsLike(Long postIdx, CommentsDto commentsDto) throws Exception {
         Post post = postRepository.findByPostIdx(postIdx);
         CommentsLike commentsLike = CommentsLike.builder()
-                .user(currentUserUtil.getCurrentUser())
+                .user(currentUser.getCurrentUser())
                 .comments(commentsRepository.findByCommentsContentAndPost(commentsDto.getCommentsContent(),post))
                 .build();
         return commentsLikeRepository.save(commentsLike);

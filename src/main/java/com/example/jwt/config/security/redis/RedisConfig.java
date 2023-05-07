@@ -1,4 +1,4 @@
-package com.example.jwt.util;
+package com.example.jwt.config.security.redis;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -10,7 +10,7 @@ import java.time.Duration;
 @Service
 @RequiredArgsConstructor
 
-public class RedisUtil {
+public class RedisConfig {
 
     private final StringRedisTemplate stringRedisTemplate;
 

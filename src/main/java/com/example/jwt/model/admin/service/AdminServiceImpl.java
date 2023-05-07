@@ -5,7 +5,7 @@ import com.example.jwt.model.user.User;
 import com.example.jwt.model.user.enum_type.UserRole;
 import com.example.jwt.model.user.repository.UserRepository;
 import com.example.jwt.model.user.service.UserService;
-import com.example.jwt.util.CurrentUserUtil;
+import com.example.jwt.config.security.auth.CurrentUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,7 @@ public class AdminServiceImpl implements AdminService{
 
     private final UserService userService;
     private final UserRepository userRepository;
-    private final CurrentUserUtil currentUserUtil;
+    private final CurrentUser currentUser;
 
     @Value("${tita.admin-code}")
     private String adminCode;
@@ -29,7 +29,7 @@ public class AdminServiceImpl implements AdminService{
     @Override
     public void grantAdmin(String code) throws Exception{
         if (code.equals(adminCode))
-            userService.modifyUserRole(currentUserUtil.getCurrentUser(), UserRole.ROLE_SCHOOL_ADMIN);
+            userService.modifyUserRole(currentUser.getCurrentUser(), UserRole.ROLE_SCHOOL_ADMIN);
         else
             throw new Exception();
     }
